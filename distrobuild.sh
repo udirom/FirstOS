@@ -1,53 +1,46 @@
+#!/bin/sh
+
 # Start by updating everything
 sudo apt update && sudo apt upgrade -y
 
 
-#Ubuntu adjustments
-## Install flatpak
-sudo apt install flatpak -y
-sudo apt install gnome-software-plugin-flatpak -y
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
-## Install timeshift
-sudo add-apt-repository -y ppa:teejee2008/ppa
-sudo apt update
-sudo apt install timeshift
-
-## To enable touch tap in KDE
-sudo apt install xserver-xorg-input-evdev
-
 #Install from apt repos
-sudo apt install -y build-essential \
-       	vim \
-	tmux \
-       	git \
-       	curl \
-       	wget \
-       	software-properties-common \
-       	apt-transport-https \
+sudo apt install -y --no-install-recommends \
+    build-essential \
+	make \
+    git \
+    curl \
+    wget \
+    software-properties-common \
+    apt-transport-https \
+	# Python
 	python3-pip \
+	python3-venv \
+	python3-testresources \
+	# Deps to build python with pyenv
 	python3-dev \
 	libssl-dev \
 	libffi-dev \
-	python3-venv \
-	python3-testresources \
-	fzf \
+	zlib1g-dev \
+	libbz2-dev \
+	libreadline-dev \
+	libsqlite3-dev \
+	llvm \
+	libncurses5-dev \
+	xz-utils \
+	tk-dev \
+	libxml2-dev \
+	libxmlsec1-dev \
+	libffi-dev \
+	liblzma-dev \
+	# Shell utils
 	tig \
-	fd-find
-
-
-
-
-##Install Fonts
-sudo add-apt-repository multiverse
-sudo apt update && sudo apt install ttf-mscorefonts-installer -y
-curl -sS https://webinstall.dev/nerdfont | bash
-sudo fc-cache -f -v
-
+	fd-find \
+	jq \
+	network-manager-openvpn
 
 #Install from 3rd party repos
 ##Install Brave
-sudo apt install apt-transport-https curl
 
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 
@@ -66,54 +59,55 @@ sudo apt install ./appimagelauncher_2.2.0-travis995.0f91801.bionic_amd64.deb -y
 rm appimagelauncher_2.2.0-travis995.0f91801.bionic_amd64.deb
 
 ## Install Mailspring
-
 wget https://github.com/Foundry376/Mailspring/releases/download/1.9.1/mailspring-1.9.1-amd64.deb
 sudo apt install ./mailspring-1.9.1-amd64.deb -y
 rm mailspring-1.9.1-amd64.deb
 
 
 #Install Flatpaks
-## Install Jetbrains tools
-flatpak install flathub com.jetbrains.IntelliJ-IDEA-Ultimate -y
-flatpak install flathub com.jetbrains.DataGrip -y
-## Install Desktop utilities
-flatpak install -y flathub com.spotify.Client -y
-flatpak install flathub io.bit3.WhatsAppQT -y
-flatpak install flathub org.fedoraproject.MediaWriter -y
-flatpak install flathub us.zoom.Zoom -y
-flatpak install flathub com.slack.Slack -y
-flatpak run com.simplenote.Simplenote -y
-flatpak install flathub com.visualstudio.code -y
-flatpak install flathub com.transmissionbt.Transmission -y
-flatpak install flathub org.pulseaudio.pavucontrol -y
-flatpak install flathub org.gnome.Boxes -y
-
-#Dev
-## Python
-###Pyenv
-sudo apt install -y --no-install-recommends make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
-
-curl https://pyenv.run | bash
-
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.profile
-echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.profile
-echo 'eval "$(pyenv init --path)"' >> ~/.profile
-
-source ~/.profile
-
-### Pips
-pip3 install ipython pipenv poetry
+flatpak install -y flathub com.jetbrains.IntelliJ-IDEA-Ultimate \
+	flatpak install flathub com.jetbrains.DataGrip \
+	flatpak install -y flathub com.spotify.Client \
+	flatpak install flathub io.bit3.WhatsAppQT \
+	flatpak install flathub org.fedoraproject.MediaWriter \
+	flatpak install flathub us.zoom.Zoom \
+	flatpak install flathub com.slack.Slack \
+	flatpak run com.simplenote.Simplenote \
+	flatpak install flathub com.visualstudio.code \
+	flatpak install flathub com.transmissionbt.Transmission \
+	flatpak install flathub org.pulseaudio.pavucontrol \
+	flatpak install flathub org.gnome.Boxes
 
 
-## Node
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+#Install asdf
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+cd ~/.asdf
+git checkout "$(git describe --abbrev=0 --tags)"
+cd ..
+cp -R .asdf /etc/skel
 
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+echo '. $HOME/.asdf/asdf.sh' | tee -a ~/.bashrc /etc/skel/.bashrc
+echo '. $HOME/.asdf/completions/asdf.bash' | tee -a ~/.bashrc /etc/skel/.bashrc
 
-nvm install --lts
-nvm use --lts
-npm install -g yarn typescript lerna create-react-app
 
-## Rust
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+##Install Fonts
+sudo add-apt-repository multiverse
+sudo apt update && sudo apt install ttf-mscorefonts-installer -y
+curl -sS https://webinstall.dev/nerdfont | bash
+git clone https://github.com/powerline/fonts
+cd fonts
+./install.sh
+cd ..
+rm -Rf fonts
+sudo fc-cache -f -v
+
+##Install Fonts
+sudo add-apt-repository multiverse
+sudo apt update && sudo apt install ttf-mscorefonts-installer -y
+curl -sS https://webinstall.dev/nerdfont | bash
+git clone https://github.com/powerline/fonts
+cd fonts
+./install.sh
+cd ..
+rm -Rf fonts
+sudo fc-cache -f -v
