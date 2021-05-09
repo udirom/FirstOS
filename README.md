@@ -1,4 +1,4 @@
-# First OS
+# 🥇 First OS
 First OS is an Ubuntu-based LTS desktop distribution. Some of its more interesting features include a custom development environment equipped with preinstalled tools like programming languages, extended terminal, IDE, VPN, etc...
 This distribution attempts to deliver a linux desktop environment prepared for development from scratch.
 
