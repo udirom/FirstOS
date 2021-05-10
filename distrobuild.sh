@@ -7,6 +7,10 @@ sudo apt update && sudo apt upgrade -y
 #Install from apt repos
 sudo apt install -y --no-install-recommends \
     build-essential \
+	ca-certificates \
+	gnupg \
+	lsb-release \
+	software-properties-common \
 	make \
     git \
     curl \
@@ -59,6 +63,7 @@ sudo apt install ./appimagelauncher_2.2.0-travis995.0f91801.bionic_amd64.deb -y
 
 rm appimagelauncher_2.2.0-travis995.0f91801.bionic_amd64.deb
 
+
 ## Install Mailspring
 wget https://github.com/Foundry376/Mailspring/releases/download/1.9.1/mailspring-1.9.1-amd64.deb
 sudo apt install ./mailspring-1.9.1-amd64.deb -y
@@ -68,12 +73,12 @@ rm mailspring-1.9.1-amd64.deb
 #Install Flatpaks
 flatpak install -y flathub com.jetbrains.IntelliJ-IDEA-Ultimate \
 	flatpak install flathub com.jetbrains.DataGrip \
-	flatpak install -y flathub com.spotify.Client \
+	flatpak install flathub com.spotify.Client \
 	flatpak install flathub io.bit3.WhatsAppQT \
 	flatpak install flathub org.fedoraproject.MediaWriter \
 	flatpak install flathub us.zoom.Zoom \
 	flatpak install flathub com.slack.Slack \
-	flatpak run com.simplenote.Simplenote \
+	flatpak install com.simplenote.Simplenote \
 	flatpak install flathub com.visualstudio.code \
 	flatpak install flathub com.transmissionbt.Transmission \
 	flatpak install flathub org.pulseaudio.pavucontrol \
@@ -91,16 +96,18 @@ echo '. $HOME/.asdf/asdf.sh' | tee -a ~/.bashrc /etc/skel/.bashrc
 echo '. $HOME/.asdf/completions/asdf.bash' | tee -a ~/.bashrc /etc/skel/.bashrc
 
 
-##Install Fonts
-sudo add-apt-repository multiverse
-sudo apt update && sudo apt install ttf-mscorefonts-installer -y
-curl -sS https://webinstall.dev/nerdfont | bash
-git clone https://github.com/powerline/fonts
-cd fonts
-./install.sh
-cd ..
-rm -Rf fonts
-sudo fc-cache -f -v
+#Install docker
+sudo apt-get remove -y docker docker-engine docker.io containerd runc
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo \
+"deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+sudo groupadd docker
 
 ##Install Fonts
 sudo add-apt-repository multiverse
@@ -112,3 +119,4 @@ cd fonts
 cd ..
 rm -Rf fonts
 sudo fc-cache -f -v
+
