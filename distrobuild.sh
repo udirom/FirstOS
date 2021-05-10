@@ -71,19 +71,24 @@ rm mailspring-1.9.1-amd64.deb
 
 
 #Install Flatpaks
-flatpak install -y flathub com.jetbrains.IntelliJ-IDEA-Ultimate \
-	flatpak install flathub com.jetbrains.DataGrip \
-	flatpak install flathub com.spotify.Client \
-	flatpak install flathub io.bit3.WhatsAppQT \
-	flatpak install flathub org.fedoraproject.MediaWriter \
-	flatpak install flathub us.zoom.Zoom \
-	flatpak install flathub com.slack.Slack \
-	flatpak install com.simplenote.Simplenote \
-	flatpak install flathub com.visualstudio.code \
-	flatpak install flathub com.transmissionbt.Transmission \
-	flatpak install flathub org.pulseaudio.pavucontrol \
-	flatpak install flathub org.gnome.Boxes
+sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+sudo apt update 
 
+sudo flatpak install -y flathub com.jetbrains.IntelliJ-IDEA-Ultimate \
+	com.jetbrains.DataGrip \
+	com.spotify.Client \
+	io.bit3.WhatsAppQT \
+	org.fedoraproject.MediaWriter \
+	us.zoom.Zoom \
+	com.slack.Slack \
+	com.simplenote.Simplenote \
+	com.visualstudio.code \
+	com.transmissionbt.Transmission \
+	org.pulseaudio.pavucontrol \
+	org.gnome.Boxes
+
+
+sudo flatpak uninstall --unused
 
 #Install asdf
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf
