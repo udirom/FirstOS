@@ -11,6 +11,7 @@ sudo apt install -y --no-install-recommends \
     git \
     curl \
     wget \
+	easy-rsa \
     software-properties-common \
     apt-transport-https \
 	# Python
