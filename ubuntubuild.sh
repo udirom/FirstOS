@@ -1,4 +1,5 @@
 #!/bin/sh
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 # Start by updating everything
 sudo apt update && sudo apt upgrade -y
@@ -73,3 +74,5 @@ sudo apt autoremove
 
 #Install starship
 sudo sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+
+source $SCRIPT_DIR/user_setup.sh
