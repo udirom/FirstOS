@@ -37,12 +37,28 @@ This distribution attempts to deliver a linux desktop environment prepared for d
 - Zoom.us
 - Slack
 - SimpleNote
-- VisualStudio IDE
 - Brave Browser
 - MailSpring
 - Spotify
-- Transmission - Torrent client
 - PulseAudio
 
 ## Preinstall terminal plugins
 - fzf
+- 
+
+## INSTALL
+
+1. Install Ubuntu / Debian based distro of your choice
+2. From your home folder:
+
+### Debian
+```
+git clone https://github.com/udirom/FirstOS.git .firstos
+~/.firstos/debianbuild.sh
+```
+
+### Ubuntu based
+```
+git clone https://github.com/udirom/FirstOS.git .firstos
+~/.firstos/ubuntubuild.sh
+```

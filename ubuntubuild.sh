@@ -5,14 +5,14 @@ sudo apt update && sudo apt upgrade -y
 
 
 #Install from apt repos
-sudo apt install -y --no-install-recommends gparted fd-find build-essential ca-certificates gnupg lsb-release software-properties-common make git curl wget easy-rsa software-properties-common apt-transport-https python3-pip python3-venv python3-testresources python3-dev libssl-dev libffi-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev tig fd-find jq network-manager-openvpn zsh fish fzf tmux vim autojump
+sudo apt install -y --no-install-recommends rar unrar gparted fd-find build-essential ca-certificates gnupg lsb-release software-properties-common make git curl wget easy-rsa software-properties-common apt-transport-https python3-pip python3-venv python3-testresources python3-dev libssl-dev libffi-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev tig fd-find jq network-manager-openvpn zsh fish fzf tmux vim autojump
 
 #Install from 3rd party repos
 ##Install Brave
 
 sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 
-echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+sudo echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 
 sudo apt update
 
@@ -32,11 +32,16 @@ sudo apt install ./appimagelauncher_2.2.0-travis995.0f91801.bionic_amd64.deb -y
 rm appimagelauncher_2.2.0-travis995.0f91801.bionic_amd64.deb
 
 
-## exa
-wget https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-v0.10.1.zip
-unzip exa-linux-x86_64-v0.10.1.zip -d exa
-cp exa/bin/exa /usr/local/bin/
-rm -rf exa
+## lsd
+https://github.com/Peltoche/lsd/releases/download/0.20.1/lsd-0.20.1-x86_64-unknown-linux-gnu.tar.gz
+tar xzf lsd-0.20.1-x86_64-unknown-linux-gnu.tar.gz
+sudo mv lsd-0.20.1-x86_64-unknown-linux-gnu/lsd /usr/local/bin
+rm -rf lsd-0.20.1-x86_64-unknown-linux-gnu
+
+# rsfetch
+wget https://github.com/rsfetch/rsfetch/releases/download/2.0.0/rsfetch
+sudo chmod +x rsfetch
+sudo mv rsfetch /usr/local/bin
 
 ## Install Mailspring
 wget https://github.com/Foundry376/Mailspring/releases/download/1.9.1/mailspring-1.9.1-amd64.deb
@@ -67,4 +72,4 @@ sudo fc-cache -f -v
 sudo apt autoremove
 
 #Install starship
-sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+sudo sh -c "$(curl -fsSL https://starship.rs/install.sh)"
