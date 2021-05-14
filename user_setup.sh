@@ -16,6 +16,12 @@ sudo flatpak install -y flathub com.jetbrains.IntelliJ-IDEA-Ultimate \
 	org.pulseaudio.pavucontrol \
 	org.telegram.desktop
 
+# Install gnome shell extentoins
+mkdir -p ~/.local/share/gnome-shell/extensions
+cp -R $SCRIPT_DIR/gnome-shell-extensions/* ~/.local/share/gnome-shell/extensions/
+
+# Install firefox addons TBD...
+
 # install zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 mv ~/.zshrc ~/.old-zshrc
