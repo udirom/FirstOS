@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 # Start by updating everything
@@ -22,7 +22,7 @@ sudo apt install brave-browser -y
 ## Timeshift
 sudo add-apt-repository -y ppa:teejee2008/ppa
 sudo apt update
-sudo apt install timeshift
+sudo apt install timeshift -y
 
 #Manual installs
 ## Install AppImageLauncher
@@ -56,7 +56,7 @@ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] 
 
 sudo apt-get update
 
-sudo apt-get install docker-ce docker-ce-cli containerd.io
+sudo apt-get install docker-ce docker-ce-cli containerd.io -y
 
 sudo groupadd docker
 
