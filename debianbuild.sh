@@ -32,10 +32,10 @@ rm appimagelauncher_2.2.0-travis995.0f91801.bionic_amd64.deb
 
 
 ## lsd
-https://github.com/Peltoche/lsd/releases/download/0.20.1/lsd-0.20.1-x86_64-unknown-linux-gnu.tar.gz
+wget https://github.com/Peltoche/lsd/releases/download/0.20.1/lsd-0.20.1-x86_64-unknown-linux-gnu.tar.gz
 tar xzf lsd-0.20.1-x86_64-unknown-linux-gnu.tar.gz
 sudo mv lsd-0.20.1-x86_64-unknown-linux-gnu/lsd /usr/local/bin
-rm -rf lsd-0.20.1-x86_64-unknown-linux-gnu
+rm -rf lsd-0.20.1-x86_64-unknown-linux-gnu*
 
 # rsfetch
 wget https://github.com/rsfetch/rsfetch/releases/download/2.0.0/rsfetch
