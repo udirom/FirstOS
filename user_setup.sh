@@ -13,7 +13,6 @@ sudo flatpak install -y flathub com.jetbrains.IntelliJ-IDEA-Ultimate \
 	us.zoom.Zoom \
 	com.slack.Slack \
 	com.simplenote.Simplenote \
-	org.pulseaudio.pavucontrol \
 	org.telegram.desktop
 
 
