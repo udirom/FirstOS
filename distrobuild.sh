@@ -34,10 +34,15 @@ sudo apt install brave-browser -y --no-install-recommends -qq &>/dev/null
 ## Timeshift
 if ! command -v timeshift &> /dev/null
 then
-    echo "Installing timeshift"
-    sudo add-apt-repository -y ppa:teejee2008/ppa
-	sudo apt update -qq &>/dev/null
-	sudo apt install timeshift -y -qq &>/dev/null
+	echo "Installing timeshift"
+	if [ "$DISTRO" == "Debian" ]
+	then
+		sudo apt install timeshift -y -qq &>/dev/null
+	else
+	  sudo add-apt-repository -y ppa:teejee2008/ppa
+		sudo apt update -qq &>/dev/null
+		sudo apt install timeshift -y -qq &>/dev/null
+	fi
 fi
 
 ## Flatpak
@@ -77,12 +82,18 @@ sudo apt install ./mailspring-1.9.1-amd64.deb -y -qq &>/dev/null
 rm mailspring-1.9.1-amd64.deb
 
 echo "Installing docker"
-sudo sh -c "$(curl -fsSL https://get.docker.com)"
-
-sudo apt-get install -y -qq uidmap &>/dev/null
+if [ "$DISTRO" == "Debian" ]
+then
+	 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+	 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+	 sudo apt-get update -qq
+	 sudo apt-get install docker-ce docker-ce-cli containerd.io -y -qq
+else
+	sudo sh -c "$(curl -fsSL https://get.docker.com)"
+	sudo apt-get install -y -qq uidmap &>/dev/null
+fi
 
 dockerd-rootless-setuptool.sh install
-
 
 echo "Installing Fonts"
 sudo add-apt-repository multiverse &>/dev/null
