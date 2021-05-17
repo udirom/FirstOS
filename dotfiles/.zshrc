@@ -2,6 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
+ZSH_DISABLE_COMPFIX=true
 export ZSH="/home/udi/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will

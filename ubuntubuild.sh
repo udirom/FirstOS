@@ -9,6 +9,14 @@ sudo apt update -qq &>/dev/null
 sudo apt upgrade -y -qq &>/dev/null
 
 
+# Instal Nvidia drivers for Debian
+if [ "$DISTRO" == "Debian" ]
+then
+	echo "This is Debian, installing Nvidia drivers if necessary"
+	sh -c "$SCRIPT_DIR/nvidia.sh"
+fi
+
+
 echo "Installing base packages"
 sudo apt install -y -qq --no-install-recommends rar unrar gparted fd-find build-essential ca-certificates gnupg lsb-release software-properties-common make git curl wget easy-rsa software-properties-common apt-transport-https python3-pip python3-venv python3-testresources python3-dev libssl-dev libffi-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev tig fd-find jq network-manager-openvpn zsh fish fzf tmux vim autojump &>/dev/null
 
@@ -49,7 +57,7 @@ wget https://github.com/TheAssassin/AppImageLauncher/releases/download/v2.2.0/ap
 
 sudo apt install ./appimagelauncher_2.2.0-travis995.0f91801.bionic_amd64.deb -y -qq &>/dev/null
 
-rm appimagelauncher_2.2.0-travis995.0f91801.bionic_amd64.deb
+rm appimagelauncher*.deb
 
 
 echo "Installing LSD (colored ls)"
@@ -92,6 +100,6 @@ sudo fc-cache -f -v
 sudo apt autoremove -qq &>/dev/null
 
 echo "Installing starship prompt"
-sudo sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+sudo sh -c "$(curl -fsSL https://starship.rs/install.sh)" "" -y
 
 zsh -c "$SCRIPT_DIR/user_setup.sh"
