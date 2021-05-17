@@ -1,5 +1,4 @@
 #!/usr/bin/zsh
-
 echo "Install asdf"
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0
 source ~/.zshrc
@@ -32,7 +31,7 @@ echo "minikube"
 asdf plugin add minikube
 asdf install minikube latest
 asdf global minikube $(asdf latest minikube)
- 
+
 echo "kubectl"
 asdf plugin add kubectl
 asdf install kubectl latest

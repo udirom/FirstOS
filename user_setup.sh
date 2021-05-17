@@ -16,7 +16,7 @@ sudo flatpak install -y flathub com.jetbrains.IntelliJ-IDEA-Ultimate \
 	org.telegram.desktop
 
 
-if ! command -v gnome-shell &> /dev/null
+if command -v gnome-shell &> /dev/null
 then
   echo "Installing gnome shell extentions"
 	sudo apt install gnome-shell-extensions gnome-tweaks -y -qq &>/dev/null
@@ -25,6 +25,7 @@ then
 fi
 
 echo "TBD: install firefox addons"
+
 
 echo "Install oh-my-zsh"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
