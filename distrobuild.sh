@@ -14,8 +14,10 @@ if [ "$DISTRO" == "Debian" ]
 then
 	echo "This is Debian, installing Nvidia drivers if necessary"
 	sh -c "$SCRIPT_DIR/nvidia.sh"
-fi
 
+	echo "Installing codecs"
+	sudo apt install libavcodec-extra vlc -y -qq &>/dev/null
+fi
 
 echo "Installing base packages"
 sudo apt install -y -qq --no-install-recommends rar unrar gparted fd-find build-essential ca-certificates gnupg lsb-release software-properties-common make git curl wget easy-rsa software-properties-common apt-transport-https python3-pip python3-venv python3-testresources python3-dev libssl-dev libffi-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev tig fd-find jq network-manager-openvpn zsh fish fzf tmux vim autojump &>/dev/null
