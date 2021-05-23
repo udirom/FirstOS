@@ -20,7 +20,7 @@ then
 fi
 
 echo "Installing base packages"
-sudo apt install -y -qq --no-install-recommends rar unrar gparted fd-find build-essential ca-certificates gnupg lsb-release software-properties-common make git curl wget easy-rsa software-properties-common apt-transport-https python3-pip python3-venv python3-testresources python3-dev libssl-dev libffi-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev tig fd-find jq network-manager-openvpn zsh fish fzf tmux vim autojump &>/dev/null
+sudo apt install -y -qq --no-install-recommends rar unrar gparted fd-find build-essential ca-certificates gnupg lsb-release make git curl wget easy-rsa software-properties-common apt-transport-https python3-pip python3-venv python3-testresources python3-dev libssl-dev libffi-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev tig fd-find jq network-manager-openvpn zsh fish fzf tmux vim autojump &>/dev/null
 
 #Install from 3rd party repos
 if ! command -v brave-browser &> /dev/null
@@ -129,5 +129,18 @@ then
 	echo "Installing starship prompt"
 	sudo sh -c "$(curl -fsSL https://starship.rs/install.sh)" "" -y
 fi
+
+
+echo "Installing Flatpaks"
+sudo flatpak install -y flathub com.jetbrains.IntelliJ-IDEA-Ultimate \
+	com.jetbrains.DataGrip \
+	com.spotify.Client \
+	io.bit3.WhatsAppQT \
+	org.fedoraproject.MediaWriter \
+	us.zoom.Zoom \
+	com.slack.Slack \
+	com.simplenote.Simplenote \
+	org.telegram.desktop
+
 
 zsh -c "$SCRIPT_DIR/user_setup.sh"

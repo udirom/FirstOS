@@ -4,18 +4,6 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 # Add user to the docker group
 sudo usermod -aG docker $USER
 
-echo "Installing Flatpaks"
-sudo flatpak install -y flathub com.jetbrains.IntelliJ-IDEA-Ultimate \
-	com.jetbrains.DataGrip \
-	com.spotify.Client \
-	io.bit3.WhatsAppQT \
-	org.fedoraproject.MediaWriter \
-	us.zoom.Zoom \
-	com.slack.Slack \
-	com.simplenote.Simplenote \
-	org.telegram.desktop
-
-
 if command -v gnome-shell &> /dev/null
 then
   echo "Installing gnome shell extentions"
