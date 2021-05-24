@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 echo "Optimizing dnf"
 sudo echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf
 sudo echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
@@ -55,16 +57,18 @@ echo "Install timeshift"
 sudo dnf install -y timeshift
 
 echo "Install utilities"
-sudo dnf install -y unrar gparted fd-find ca-certificates gnupg make git curl wget easy-rsa python3-testresources python3-devel openssl-devel libffi-devel zlib bzip2-libs readline-devel sqlite-libs llvm ncurses-devel xz tk-devel libxml2-devel xmlsec1 libffi-devel lzma-sdk tig fd-find jq zsh fish fzf tmux vim autojump lsd
-sudo dnf install -y git git-lfs gparted
+sudo dnf install -y git git-lfs unrar gparted fd-find ca-certificates gnupg make git curl flameshot wget easy-rsa python3-testresources python3-devel openssl-devel libffi-devel zlib bzip2-libs readline-devel sqlite-libs llvm ncurses-devel xz tk-devel libxml2-devel xmlsec1 libffi-devel lzma-sdk tig fd-find jq zsh fish fzf tmux vim autojump lsd
 git-lfs install
 sudo dnf -y install unzip p7zip p7zip-plugins 
 
 echo "build essentials"
 sudo dnf install -y gcc gcc-g++ make autoconf automake kernel-devel redhat-rpm-config
 
-echo "Install Appimagelauncher"
-sudo rpm -i https://github.com/TheAssassin/AppImageLauncher/releases/download/v2.2.0/appimagelauncher-2.2.0-travis995.0f91801.x86_64.rpm
+if ! command -v appimagelauncherd &> /dev/null
+then
+    echo "Install Appimagelauncher"
+    sudo rpm -i https://github.com/TheAssassin/AppImageLauncher/releases/download/v2.2.0/appimagelauncher-2.2.0-travis995.0f91801.x86_64.rpm
+fi
 
 if ! command -v rsfetch &> /dev/null
 then
@@ -101,9 +105,6 @@ dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-releas
 dnf install -y https://repo.linrunner.de/fedora/tlp/repos/releases/tlp-release.fc$(rpm -E %fedora).noarch.rpm
 dnf install -y kernel-devel akmod-acpi_call akmod-tp_smapi
 
-sudo dnf install -y brave-browser
-
-
 echo "Install Docker"
 
 sudo dnf remove -y docker \
@@ -135,46 +136,71 @@ sudo dnf autoremove -y
 # Install nonfree apps
 git clone https://github.com/rpmfusion-infra/fedy.git
 
-echo "Install Jetbrains toolbox"
-chmod +x fedy/plugins/jetbrains-toolbox.plugin/install.sh
-(cd fedy/plugins/jetbrains-toolbox.plugin/ && sudo su root bash -c ./install.sh)
+if ! command -v jetbrains-toolbox &> /dev/null
+then
+    echo "Install Jetbrains toolbox"
+    chmod +x fedy/plugins/jetbrains-toolbox.plugin/install.sh
+    (cd fedy/plugins/jetbrains-toolbox.plugin/ && sudo su root bash -c ./install.sh)
+fi
 
-echo "Install Postman"
-chmod +x fedy/plugins/postman.plugin/install.sh
-(cd fedy/plugins/postman.plugin/ && sudo su root bash -c ./install.sh)
 
+if ! command -v postman &> /dev/null
+then
+    echo "Install Postman"
+    chmod +x fedy/plugins/postman.plugin/install.sh
+    (cd fedy/plugins/postman.plugin/ && sudo su root bash -c ./install.sh)
+fi
 
-echo "Install Simplenote"
-chmod +x fedy/plugins/simplenote.plugin/install.sh
-(cd fedy/plugins/simplenote.plugin/ && sudo su root bash -c ./install.sh)
+if ! command -v simplenote &> /dev/null
+then
+    echo "Install Simplenote"
+    chmod +x fedy/plugins/simplenote.plugin/install.sh
+    (cd fedy/plugins/simplenote.plugin/ && sudo su root bash -c ./install.sh)
+fi
 
 # Cleanup Fedy
 sudo rm -rf fedy
 
-echo "Install Slack"
-sudo dnf copr enable jdoss/slack-repo -y
-sudo dnf install slack-repo -y
-sudo dnf install slack -y
+if ! command -v slack &> /dev/null
+then
+    echo "Install Slack"
+    sudo dnf copr enable jdoss/slack-repo -y
+    sudo dnf install slack-repo -y
+    sudo dnf install slack -y
+fi
 
-echo "Install spotify"
-sudo dnf config-manager --add-repo=https://negativo17.org/repos/fedora-spotify.repo  
-sudo dnf -y install spotify-client 
+if ! command -v spotify &> /dev/null
+then
+    echo "Install spotify"
+    sudo dnf config-manager --add-repo=https://negativo17.org/repos/fedora-spotify.repo  
+    sudo dnf -y install spotify-client 
+fi
 
-echo "Install Brave browser"
-sudo dnf install -y dnf-plugins-core
+if ! command -v brave-browser &> /dev/null
+then
+    echo "Install Brave browser"
+    sudo dnf install -y dnf-plugins-core
+    sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
+    sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+    sudo dnf install -y brave-browser
+fi
 
-sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/x86_64/
+if ! command -v code &> /dev/null
+then
+    echo "Install Vscode"
+    sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+    sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+    sudo dnf check-update
+    sudo dnf install -y code
+fi
 
-sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
 
-echo "Install Vscode"
-sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
-sudo dnf check-update
-sudo dnf install -y code
+if ! command -v zoom &> /dev/null
+then
+    echo "Install Zoom"
+    sudo rpm -i https://zoom.us/client/latest/zoom_$(uname -m).rpm
+fi
 
-echo "Install Zoom"
-sudo rpm -i https://zoom.us/client/latest/zoom_$(uname -m).rpm
 
 # Install Appimages
 mkdir -p ~/Applications
@@ -184,3 +210,17 @@ echo "Install walc Appimage to Applications"
 wget -c https://github.com/$(wget -q https://github.com/cstayyab/WALC/releases -O - | grep "walc.AppImage" | head -n 1 | cut -d '"' -f 2) -P ~/Applications/
 chmod +x ~/Applications/walc.AppImage
 
+
+echo "Install Telegram"
+sudo curl -fsSL https://telegram.org/dl/desktop/linux | sudo tar xJf - -C /opt/
+sudo cp $SCRIPT_DIR/icons/telegram.desktop /usr/share/applications
+
+sudo update-desktop-database /usr/share/applications
+
+if ! command -v starship &> /dev/null
+then
+	echo "Installing starship prompt"
+	sudo sh -c "$(curl -fsSL https://starship.rs/install.sh)" "" -y
+fi
+
+zsh -c "$SCRIPT_DIR/user_setup.sh"

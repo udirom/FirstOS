@@ -7,7 +7,6 @@ sudo usermod -aG docker $USER
 if command -v gnome-shell &> /dev/null
 then
   echo "Installing gnome shell extentions"
-	sudo apt install gnome-shell-extensions gnome-tweaks -y -qq &>/dev/null
 	mkdir -p ~/.local/share/gnome-shell/extensions
 	cp -R $SCRIPT_DIR/gnome-shell-extensions/* ~/.local/share/gnome-shell/extensions/
 fi

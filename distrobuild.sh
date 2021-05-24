@@ -22,6 +22,13 @@ fi
 echo "Installing base packages"
 sudo apt install -y -qq --no-install-recommends rar unrar gparted fd-find build-essential ca-certificates gnupg lsb-release make git curl wget easy-rsa software-properties-common apt-transport-https python3-pip python3-venv python3-testresources python3-dev libssl-dev libffi-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev tig fd-find jq network-manager-openvpn zsh fish fzf tmux vim autojump &>/dev/null
 
+if command -v gnome-shell &> /dev/null
+then
+  echo "Install Gnome tweaks and extensions"
+	sudo apt install gnome-shell-extensions gnome-tweaks -y -qq &>/dev/null
+fi
+
+
 #Install from 3rd party repos
 if ! command -v brave-browser &> /dev/null
 then
