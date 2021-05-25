@@ -198,6 +198,7 @@ fi
 if ! command -v zoom &> /dev/null
 then
     echo "Install Zoom"
+    sudo dnf install -y ibus-m17n
     sudo rpm -i https://zoom.us/client/latest/zoom_$(uname -m).rpm
 fi
 
