@@ -206,7 +206,6 @@ fi
 mkdir -p ~/Applications
 
 echo "Install walc Appimage to Applications"
-# wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases -O - | grep "appimaged-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2)
 wget -c https://github.com/$(wget -q https://github.com/cstayyab/WALC/releases -O - | grep "walc.AppImage" | head -n 1 | cut -d '"' -f 2) -P ~/Applications/
 chmod +x ~/Applications/walc.AppImage
 
