@@ -1,0 +1,103 @@
+<application>
+  <component name="NodeJsLocalInterpreters">
+    <local-interpreter path="$USER_HOME$/.asdf/shims/node">
+      <version-cache version="16.1.0" last-modified="1620766119399" />
+    </local-interpreter>
+    <local-interpreter path="$USER_HOME$/.asdf/installs/nodejs/16.1.0/bin/node" />
+  </component>
+  <component name="ProjectPluginTrackerManager">
+    <trackers>
+      <map>
+        <entry key="1s6bzBgJQikPrR7WZ25Bak9ByVL">
+          <value>
+            <ProjectPluginTracker />
+          </value>
+        </entry>
+        <entry key="1sA4dquBvDo104ssF6f4RvQF1R1">
+          <value>
+            <ProjectPluginTracker />
+          </value>
+        </entry>
+        <entry key="1siNIR95t2Rr7uD29fabPIVS971">
+          <value>
+            <ProjectPluginTracker />
+          </value>
+        </entry>
+        <entry key="1siNl5expA9JJDYvYyBBVZDTA2p">
+          <value>
+            <ProjectPluginTracker />
+          </value>
+        </entry>
+        <entry key="1siXnSvlI9WQ1Q0wrQOmkLUJG7M">
+          <value>
+            <ProjectPluginTracker />
+          </value>
+        </entry>
+        <entry key="1siZCaq2IPoCvXRA4XKZlR5hee1">
+          <value>
+            <ProjectPluginTracker />
+          </value>
+        </entry>
+        <entry key="1snWu18LaN7o1FwoZdDqJTHeVB6">
+          <value>
+            <ProjectPluginTracker />
+          </value>
+        </entry>
+        <entry key="1snwAm8G0KDAtxIqhfzfV0Mz4zh">
+          <value>
+            <ProjectPluginTracker />
+          </value>
+        </entry>
+      </map>
+    </trackers>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ExpandBeforeRunStepsPanel" value="true" />
+    <property name="ExpandRunDashboardTypesPanel" value="false" />
+    <property name="FindSplitterProportion" value="0.4224138" />
+    <property name="IdeaUltimate.EnableRunTargetsOnce" value="true" />
+    <property name="MarketplacePluginsSearchHistory" value="nyan&#10;מטשמ&#10;/sortBy:downloads" />
+    <property name="NonModalCommitCustomization.IsApplied" value="true" />
+    <property name="SettingsSearchHistory" value="python&#10;interpreter" />
+    <property name="SplitFileEditor.Proportion" value="0.81145835" />
+    <property name="appcds.runOnSecondStart" value="IU-211.7142.45-36334a7b3c7b36a6575702bc44de5151b4d88a0247ca8d6e51e0d2abf87f59d5" />
+    <property name="ask.about.ctrl.y.shortcut.v2" value="true" />
+    <property name="defaultJdkConfigured" value="true" />
+    <property name="evlsprt3.211" value="16" />
+    <property name="experimentalFeature.run.targets" value="true" />
+    <property name="file.chooser.recent.files" value="$USER_HOME$/dev/first/reference-wallet&#10;/home/udi/dev/first/pikaia&#10;/home/udi/dev/first/reference-merchant&#10;/home/udi/dev/nirops&#10;/home/udi/dev/first/reference-merchant/.circleci&#10;/home/udi/.asdf/shims/python&#10;/home/udi/dev/first/reference-wallet/.circleci&#10;/home/udi/dev/diem/dip" />
+    <property name="file.gist.reindex.count" value="4266" />
+    <property name="fileTypeChangedCounter" value="40" />
+    <property name="fileTypeDetectors" value="com.android.tools.idea.fileTypes.profiler.MemoryCaptureFileType$Detector:com.android.tools.idea.sqlite.fileType.SqliteFileTypeDetector:com.intellij.database.vfs.DbStorageFileType$Detector:com.intellij.ide.scratch.ScratchFileServiceImpl$Detector:com.intellij.javascript.debugger.sourcemap.SourceMapFileType$MyFileTypeDetector:com.intellij.profiler.ultimate.hprof.impl.HprofFileTypeDetector:com.jetbrains.nodejs.util.NodeFileTypeDetector$JavaScriptFileTypeDetector:com.jetbrains.nodejs.util.NodeFileTypeDetector$TypeScriptFileTypeDetector" />
+    <property name="got.it.tooltip.cwm.invitation.notification" value="1" />
+    <property name="ide.memory.adjusted" value="true" />
+    <property name="ide.updates.previous.build.number" value="IU-211.7142.45" />
+    <property name="ide.updates.whats.new.shown.for" value="211" />
+    <property name="installed.kotlin.plugin.version" value="211-1.5.0-release-759-IJ6693.72" />
+    <property name="kotlin.plugin.releaseDate" value="211-1.5.0-release-759-IJ6693.72:2021-04-28" />
+    <property name="lastSeenTip" value="neue-InspectionsWidget.html" />
+    <property name="lastTimeTipsWereShown" value="1620818484074" />
+    <property name="last_opened_file_path" value="$USER_HOME$/.asdf/shims/python" />
+    <property name="log.trace.categories" value="#com.jetbrains.rdserver.requests&#10;#com.jetbrains.rd.ide.document&#10;#com.jetbrains.rdserver.document&#10;#com.jetbrains.rdserver.editors&#10;#com.jetbrains.rdserver.actions" />
+    <property name="packagesearch.endpoint.url.fulltext" value="https://package-search.services.jetbrains.com/api/search/idea/fulltext" />
+    <property name="packagesearch.endpoint.url.suggest" value="https://package-search.services.jetbrains.com/api/search/idea/suggest" />
+    <property name="packagesearch.status.updated.ts" value="1621437489113" />
+    <property name="seenTips" value="neue-InspectionsWidget.html" />
+    <property name="tasks.pass.word.conversion.enforced" value="true" />
+    <property name="ts.lib.d.ts.version" value="4.2.2" />
+    <property name="vcs.history.diff.splitter.proportion" value="0.49200428" />
+  </component>
+  <component name="TerminalCommandHistoryManager">
+    <command-history-files>
+      <command-history-file filename="pikaia-history" project-path="$USER_HOME$/dev/first/pikaia" last-access-time="1621773115000" />
+      <command-history-file filename="nirops-history" project-path="$USER_HOME$/dev/nirops" last-access-time="1621356660394" />
+      <command-history-file filename=".circleci-history1" project-path="$USER_HOME$/dev/first/reference-merchant/.circleci" last-access-time="1621509358652" />
+      <command-history-file filename="dip-history" project-path="$USER_HOME$/dev/diem/dip" last-access-time="1620818714593" />
+      <command-history-file filename="dip-history1" project-path="$USER_HOME$/dev/diem/dip" last-access-time="1620819375785" />
+      <command-history-file filename=".circleci-history" project-path="$USER_HOME$/dev/first/reference-wallet/.circleci" last-access-time="1621352183870" />
+    </command-history-files>
+  </component>
+  <component name="ToolbarSettingsService">
+    <option name="NEW_TOOLBAR_SETTINGS" value="OLD_NAVBAR" />
+  </component>
+</application>

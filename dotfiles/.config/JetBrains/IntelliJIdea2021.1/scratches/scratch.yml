@@ -1,0 +1,29 @@
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: static-resource-diem-reference-wallet-and-merchant
+  namespace: prod
+  annotations:
+    ingress.kubernetes.io/ssl-proxy-headers: 'X-Forwarded-Proto:https'
+    ingress.kubernetes.io/ssl-redirect: 'true'
+    traefik.ingress.kubernetes.io/rule-type: PathPrefixStrip
+spec:
+  rules:
+    - host: demo-merchant.diem.com
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              serviceName: static-resources
+              servicePort: 8000
+    - host: demo-wallet.diem.com
+      http:
+        paths:
+            - path: /
+              pathType: ImplementationSpecific
+              backend:
+                serviceName: static-resources
+                servicePort: 8000
+status:
+  loadBalancer: {}

@@ -1,0 +1,57 @@
+<application>
+  <component name="NodeJsLocalInterpreters">
+    <local-interpreter path="/bin/node" />
+    <local-interpreter path="/usr/bin/node" />
+  </component>
+  <component name="NotRoamableUiSettings">
+    <option name="fontFace" value="Ubuntu" />
+  </component>
+  <component name="ProjectPluginTrackerManager">
+    <trackers>
+      <map>
+        <entry key="1s6bzBgJQikPrR7WZ25Bak9ByVL">
+          <value>
+            <ProjectPluginTracker />
+          </value>
+        </entry>
+        <entry key="1sA4dquBvDo104ssF6f4RvQF1R1">
+          <value>
+            <ProjectPluginTracker />
+          </value>
+        </entry>
+        <entry key="1sI1uD5bOioUz8YKmUMPfDJkHoC">
+          <value>
+            <ProjectPluginTracker />
+          </value>
+        </entry>
+      </map>
+    </trackers>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="GeneralSettings.initiallyConfigured" value="true" />
+    <property name="InstalledPluginsSearchHistory" value="blame&#10;bla&#10;blan&#10;b&#10;bl" />
+    <property name="MarketplacePluginsSearchHistory" value="markdown&#10;mark&#10;openapi&#10;openal&#10;yaml" />
+    <property name="NonModalCommitCustomization.IsApplied" value="true" />
+    <property name="SettingsSearchHistory" value="plugins&#10;themes&#10;theme" />
+    <property name="SplitFileEditor.Proportion" value="0.3857546" />
+    <property name="appcds.runOnSecondStart" value="WS-211.7142.46-9e81b2820297f7e74e3f975995bfc89d02bd8248422cff7110e41eed859f6f61" />
+    <property name="ask.about.ctrl.y.shortcut.v2" value="true" />
+    <property name="completion.ml.enabled.notification.shown" value="true" />
+    <property name="evlsprt3.211" value="14" />
+    <property name="file.chooser.recent.files" value="$USER_HOME$/dev/diem/diem&#10;/home/udi/dev/diem/dip&#10;/home/udi/dev/first/pikaia" />
+    <property name="file.gist.reindex.count" value="1" />
+    <property name="fileTypeChangedCounter" value="2" />
+    <property name="fileTypeDetectors" value="com.intellij.ide.scratch.ScratchFileServiceImpl$Detector:com.intellij.javascript.debugger.sourcemap.SourceMapFileType$MyFileTypeDetector:com.jetbrains.nodejs.util.NodeFileTypeDetector$JavaScriptFileTypeDetector:com.jetbrains.nodejs.util.NodeFileTypeDetector$TypeScriptFileTypeDetector" />
+    <property name="got.it.tooltip.cwm.invitation.notification" value="1" />
+    <property name="got.it.tooltip.reader.mode.got.it" value="1" />
+    <property name="ide.memory.adjusted" value="true" />
+    <property name="ide.updates.previous.build.number" value="WS-211.7142.46" />
+    <property name="last_opened_file_path" value="$USER_HOME$/dev/first/pikaia" />
+    <property name="log.trace.categories" value="#com.jetbrains.rdserver.requests&#10;#com.jetbrains.rd.ide.document&#10;#com.jetbrains.rdserver.document&#10;#com.jetbrains.rdserver.editors&#10;#com.jetbrains.rdserver.actions" />
+    <property name="tasks.pass.word.conversion.enforced" value="true" />
+    <property name="ts.lib.d.ts.version" value="4.2.2" />
+  </component>
+  <component name="ToolbarSettingsService">
+    <option name="NEW_TOOLBAR_SETTINGS" value="OLD_NAVBAR" />
+  </component>
+</application>
