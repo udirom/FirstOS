@@ -31,12 +31,17 @@ echo "Enable flatpak"
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak update
 
-echo "Install Nvidia drivers"
-sudo dnf install -y akmod-nvidia # rhel/centos users can use kmod-nvidia instead
-sudo dnf install -y xorg-x11-drv-nvidia-cuda #optional for cuda/nvdec/nvenc support
-sudo dnf install -y xorg-x11-drv-nvidia-cuda-libs
-sudo dnf install -y vdpauinfo libva-vdpau-driver libva-utils
-sudo dnf install -y vulkan
+read -p "Do you want to install Nvidia drivers? (y/N) " -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    echo "Install Nvidia drivers"
+    sudo dnf install -y akmod-nvidia # rhel/centos users can use kmod-nvidia instead
+    sudo dnf install -y xorg-x11-drv-nvidia-cuda #optional for cuda/nvdec/nvenc support
+    sudo dnf install -y xorg-x11-drv-nvidia-cuda-libs
+    sudo dnf install -y vdpauinfo libva-vdpau-driver libva-utils
+    sudo dnf install -y vulkan
+fi
 
 echo "Install Gnome tweaks and extensions"
 sudo dnf install -y -q gnome-extensions-app gnome-tweaks gnome-shell-extension-appindicator
