@@ -1,0 +1,12 @@
+- Setup btrfs
+- Make ubuntubuild not based on flatpak
+- Optimize ubuntu installations latest releases to be auto fetched
+- Copy wallpapers
+- Setup Jetbrains plugins
+- Preinstall firefox add-ons
+- Setup gnome terminal VSCODE dark theme and correct fonts.
+- Auto set keyboard shortcuts including move screen.
+- Normal readme.
+- Ask before installing nvidia on ubuntu
+- Colored log and muted installations
+- Move to Ansible?
