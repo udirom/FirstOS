@@ -65,7 +65,7 @@ echo "Install timeshift"
 sudo dnf install -y timeshift
 
 echo "Install utilities"
-sudo dnf install -y dnfdragora-gui autojump-zsh autojump-fish jq ccze util-linux-user git git-lfs unrar gparted fd-find ca-certificates gnupg make git curl flameshot wget easy-rsa python3-testresources python3-devel openssl-devel libffi-devel zlib bzip2-libs readline-devel sqlite-libs llvm ncurses-devel xz tk-devel libxml2-devel xmlsec1 libffi-devel lzma-sdk tig fd-find jq zsh fish fzf tmux vim autojump lsd
+sudo dnf install -y catfish dnfdragora-gui autojump-zsh autojump-fish jq ccze util-linux-user git git-lfs unrar gparted fd-find ca-certificates gnupg make git curl flameshot wget easy-rsa python3-testresources python3-devel openssl-devel libffi-devel zlib bzip2-libs readline-devel sqlite-libs llvm ncurses-devel xz tk-devel libxml2-devel xmlsec1 libffi-devel lzma-sdk tig fd-find jq zsh fish fzf tmux vim autojump lsd
 git-lfs install
 sudo dnf -y install unzip p7zip p7zip-plugins 
 
