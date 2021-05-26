@@ -2,6 +2,8 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
+bash -c "$SCRIPT_DIR/setup_btrfs/sh"
+
 echo "Optimizing dnf"
 sudo echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf
 sudo echo 'max_parallel_downloads=10' | sudo tee -a /etc/dnf/dnf.conf
@@ -32,7 +34,6 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 flatpak update
 
 read -p "Do you want to install Nvidia drivers? (y/N) " -n 1 -r
-echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
     echo "Install Nvidia drivers"
@@ -112,36 +113,28 @@ dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-releas
 dnf install -y https://repo.linrunner.de/fedora/tlp/repos/releases/tlp-release.fc$(rpm -E %fedora).noarch.rpm
 dnf install -y kernel-devel akmod-acpi_call akmod-tp_smapi
 
-echo "Install Docker"
 
-sudo dnf remove -y docker \
-                  docker-client \
-                  docker-client-latest \
-                  docker-common \
-                  docker-latest \
-                  docker-latest-logrotate \
-                  docker-logrotate \
-                  docker-selinux \
-                  docker-engine-selinux \
-                  docker-engine
+if ! command -v docker &> /dev/null
+then
+    echo "Install Docker"
 
-sudo dnf -y install dnf-plugins-core
+    sudo dnf -y install dnf-plugins-core
 
-sudo dnf config-manager -y \
-    --add-repo \
-    https://download.docker.com/linux/fedora/docker-ce.repo
+    sudo dnf config-manager -y \
+        --add-repo \
+        https://download.docker.com/linux/fedora/docker-ce.repo
 
 
-sudo dnf install -y docker-ce docker-ce-cli containerd.io
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-sudo groupadd docker
-dockerd-rootless-setuptool.sh install --force
-sudo systemctl enable docker.service
-sudo systemctl enable containerd.service
+    sudo dnf install -y docker-ce docker-ce-cli containerd.io
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+    sudo groupadd docker
+    dockerd-rootless-setuptool.sh install --force
+    sudo systemctl enable docker.service
+    sudo systemctl enable containerd.service
 
-sudo dnf autoremove -y
-
+    sudo dnf autoremove -y
+fi
 
 # Install nonfree apps
 git clone https://github.com/rpmfusion-infra/fedy.git

@@ -1,4 +1,4 @@
-- Setup btrfs
+- Setup btrfs - Done
 - Make ubuntubuild not based on flatpak
 - Optimize ubuntu installations latest releases to be auto fetched
 - Copy wallpapers
@@ -10,3 +10,4 @@
 - Ask before installing nvidia on ubuntu
 - Colored log and muted installations
 - Move to Ansible?
+- asdf fetch latest
