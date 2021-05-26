@@ -41,6 +41,9 @@ then
     sudo dnf install -y xorg-x11-drv-nvidia-cuda-libs
     sudo dnf install -y vdpauinfo libva-vdpau-driver libva-utils
     sudo dnf install -y vulkan
+else
+    sudo bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
+    sudo bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
 fi
 
 echo "Install Gnome tweaks and extensions"
@@ -62,7 +65,7 @@ echo "Install timeshift"
 sudo dnf install -y timeshift
 
 echo "Install utilities"
-sudo dnf install -y git git-lfs unrar gparted fd-find ca-certificates gnupg make git curl flameshot wget easy-rsa python3-testresources python3-devel openssl-devel libffi-devel zlib bzip2-libs readline-devel sqlite-libs llvm ncurses-devel xz tk-devel libxml2-devel xmlsec1 libffi-devel lzma-sdk tig fd-find jq zsh fish fzf tmux vim autojump lsd
+sudo dnf install -y dnfdragora-gui autojump-zsh autojump-fish jq ccze util-linux-user git git-lfs unrar gparted fd-find ca-certificates gnupg make git curl flameshot wget easy-rsa python3-testresources python3-devel openssl-devel libffi-devel zlib bzip2-libs readline-devel sqlite-libs llvm ncurses-devel xz tk-devel libxml2-devel xmlsec1 libffi-devel lzma-sdk tig fd-find jq zsh fish fzf tmux vim autojump lsd
 git-lfs install
 sudo dnf -y install unzip p7zip p7zip-plugins 
 
@@ -72,13 +75,13 @@ sudo dnf install -y gcc gcc-g++ make autoconf automake kernel-devel redhat-rpm-c
 if ! command -v appimagelauncherd &> /dev/null
 then
     echo "Install Appimagelauncher"
-    sudo rpm -i https://github.com/TheAssassin/AppImageLauncher/releases/download/v2.2.0/appimagelauncher-2.2.0-travis995.0f91801.x86_64.rpm
+    sudo rpm -i https://github.com$(wget -q https://github.com/TheAssassin/AppImageLauncher/releases -O - | egrep "appimagelauncher.+x86_64.rpm" | head -n 1 | cut -d '"' -f 2)
 fi
 
 if ! command -v rsfetch &> /dev/null
 then
 	echo "Installing rsfetch (fast neofetch)"
-	wget https://github.com/rsfetch/rsfetch/releases/download/2.0.0/rsfetch &>/dev/null
+	wget https://github.com$(wget -q https://github.com/rsfetch/rsfetch/releases -O - | egrep "download/.+rsfetch" | head -n 1 | cut -d '"' -f 2) &>/dev/null
 	sudo chmod +x rsfetch
 	sudo mv rsfetch /usr/local/bin
 fi
@@ -86,9 +89,8 @@ fi
 if ! command -v mailspring &> /dev/null
 then
 	echo "Installing Mailspring email client"
-	rpm -i https://github.com/Foundry376/Mailspring/releases/download/1.9.1/mailspring-1.9.1-0.1.x86_64.rpm &>/dev/null
-	sudo apt install ./mailspring-1.9.1-amd64.deb -y -qq &>/dev/null
-	rm mailspring-1.9.1-amd64.deb
+	sudo dnf install -y lsb-core-noarch
+	sudo rpm -i https://github.com$(wget -q https://github.com/Foundry376/Mailspring/releases -O - | egrep "mailspring.+x86_64.rpm" | head -n 1 | cut -d '"' -f 2)
 fi
 
 echo "Install mscore fonts"
@@ -130,8 +132,9 @@ sudo dnf config-manager -y \
     https://download.docker.com/linux/fedora/docker-ce.repo
 
 
-sudo dnf install -y docker-ce docker-ce-cli containerd.io
+sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-compose
 sudo groupadd docker
+dockerd-rootless-setuptool.sh install --force
 sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
 

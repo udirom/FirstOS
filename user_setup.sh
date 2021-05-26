@@ -7,8 +7,8 @@ sudo usermod -aG docker $USER
 if command -v gnome-shell &> /dev/null
 then
   echo "Installing gnome shell extentions"
-	mkdir -p ~/.local/share/gnome-shell/extensions
-	cp -R $SCRIPT_DIR/gnome-shell-extensions/* ~/.local/share/gnome-shell/extensions/
+  mkdir -p ~/.local/share/gnome-shell/extensions
+  cp -R $SCRIPT_DIR/gnome-shell-extensions/* ~/.local/share/gnome-shell/extensions/
 fi
 
 echo "TBD: install firefox addons"
@@ -26,4 +26,9 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 
 chsh -s $(which zsh)
 
+#echo "Install Jetbrains dotfiles"
+#mv ~/.config/JetBrains ~/.config/JetBrains_bck
+#ln -s $SCRIPT_DIR/dotfiles/.config/JetBrains ~/.config/
+
+echo "Installing asdf dev env"
 zsh -c "$SCRIPT_DIR/asdf.sh"
