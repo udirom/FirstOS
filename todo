@@ -1,6 +1,6 @@
 - Setup btrfs - Done
-- Make ubuntubuild not based on flatpak
-- Optimize ubuntu installations latest releases to be auto fetched
+- Make ubuntubuild not based on flatpak - Testing left
+- Optimize ubuntu installations latest releases to be auto fetched - Testing left
 - Copy wallpapers
 - Setup Jetbrains plugins
 - Preinstall firefox add-ons
@@ -10,4 +10,4 @@
 - Ask before installing nvidia on ubuntu
 - Colored log and muted installations
 - Move to Ansible?
-- asdf fetch latest
+- asdf - install the latest version
