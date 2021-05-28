@@ -3,6 +3,7 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 DISTRO=$(lsb_release -i | awk '{print $3}')
 
+source $SCRIPT_DIR/functions.sh
 
 echo "Updating system"
 sudo apt update -qq &>/dev/null
@@ -20,7 +21,7 @@ then
 fi
 
 echo "Installing base packages"
-sudo apt install -y -qq catfish rar unrar gparted fd-find build-essential ca-certificates gnupg lsb-release make git curl wget easy-rsa software-properties-common apt-transport-https python3-pip python3-venv python3-testresources python3-dev libssl-dev libffi-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev tig fd-find jq network-manager-openvpn zsh fish fzf tmux vim autojump &>/dev/null
+sudo apt install -y -qq ccze catfish rar unrar gparted fd-find build-essential ca-certificates gnupg lsb-release make git curl wget easy-rsa software-properties-common apt-transport-https python3-pip python3-venv python3-testresources python3-dev libssl-dev libffi-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev tig fd-find jq network-manager-openvpn zsh fish fzf tmux vim autojump &>/dev/null
 
 if command -v gnome-shell &> /dev/null
 then
@@ -65,39 +66,23 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 
 
 #Manual installs
-if ! command -v appimagelauncherd &> /dev/null
-then
-	echo "Installing AppImageLauncher"
-	wget https://github.com/TheAssassin/AppImageLauncher/releases/download/v2.2.0/appimagelauncher_2.2.0-travis995.0f91801.bionic_amd64.deb &>/dev/null
-	sudo apt install ./appimagelauncher_2.2.0-travis995.0f91801.bionic_amd64.deb -y -qq &>/dev/null
-	rm appimagelauncher*.deb
-fi
+echo "Installing AppImageLauncher"
+install-github-release-deb-if-missing appimagelauncherd TheAssassin AppImageLauncher "appimagelauncher.+amd64.deb"
 
 
-if ! command -v lsd &> /dev/null
-then
-	echo "Installing LSD (colored ls)"
-	wget https://github.com/Peltoche/lsd/releases/download/0.20.1/lsd-0.20.1-x86_64-unknown-linux-gnu.tar.gz &>/dev/null
-	tar xzf lsd-0.20.1-x86_64-unknown-linux-gnu.tar.gz
-	sudo mv lsd-0.20.1-x86_64-unknown-linux-gnu/lsd /usr/local/bin
-	rm -rf lsd-0.20.1-x86_64-unknown-linux-gnu*
-fi
+echo "Installing LSD (colored ls)"
+install-github-release-deb-if-missing lsd Peltoche lsd "lsd_.*_amd64.deb"
 
 if ! command -v rsfetch &> /dev/null
 then
 	echo "Installing rsfetch (fast neofetch)"
-	wget https://github.com/rsfetch/rsfetch/releases/download/2.0.0/rsfetch &>/dev/null
+	wget https://github.com$(wget -q https://github.com/rsfetch/rsfetch/releases -O - | egrep "download/.+rsfetch" | head -n 1 | cut -d '"' -f 2) &>/dev/null
 	sudo chmod +x rsfetch
 	sudo mv rsfetch /usr/local/bin
 fi
 
-if ! command -v mailspring &> /dev/null
-then
-	echo "Installing Mailspring email client"
-	wget https://github.com/Foundry376/Mailspring/releases/download/1.9.1/mailspring-1.9.1-amd64.deb &>/dev/null
-	sudo apt install ./mailspring-1.9.1-amd64.deb -y -qq &>/dev/null
-	rm mailspring-1.9.1-amd64.deb
-fi
+echo "Installing Mailspring email client"
+install-github-release-deb-if-missing mailspring Foundry376 Mailspring "mailspring.+amd64.deb"
 
 if ! command -v docker &> /dev/null
 then
@@ -139,17 +124,63 @@ then
 	sudo sh -c "$(curl -fsSL https://starship.rs/install.sh)" "" -y
 fi
 
+echo "Installing Spotify"
+curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add - 
+sudo echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+sudo apt-get update && sudo apt-get install -y -qq spotify-client
 
-echo "Installing Flatpaks"
-sudo flatpak install -y flathub com.jetbrains.IntelliJ-IDEA-Ultimate \
-	com.jetbrains.DataGrip \
-	com.spotify.Client \
-	io.bit3.WhatsAppQT \
-	org.fedoraproject.MediaWriter \
-	us.zoom.Zoom \
-	com.slack.Slack \
-	com.simplenote.Simplenote \
-	org.telegram.desktop
+echo "Install Zoom"
+wget https://zoom.us/client/latest/zoom_amd64.deb
+sudo apt install -y -qq ./zoom_amd64.deb
+rm zoom_amd64.deb
+
+echo "Install Slack"
+if ! command -v slack &> /dev/null
+then
+	if [ "$DISTRO" == "Pop" ]
+	then
+		sudo apt install slack-desktop
+	else
+		curl -s https://packagecloud.io/install/repositories/slacktechnologies/slack/script.deb.sh | sudo bash
+	fi 
+fi
+
+echo "Install Simplenote"
+install-github-release-deb-if-missing simplenote Automattic simplenote-electron "Simplenote-linux.*amd64.deb"
+
+
+echo "Install Telegram"
+if [ "$DISTRO" == "Pop" ]
+then
+	sudo apt install -y -qq telegram-desktop
+else
+	sudo add-apt-repository -y ppa:atareao/telegram
+	sudo apt update && sudo apt install -y -qq telegram
+fi
+
+echo "Install transmission"
+if [ "$DISTRO" == "Pop" ]
+then
+	sudo apt install -y -qq transmission
+else
+	sudo add-apt-repository -y ppa:transmissionbt/ppa
+	sudo apt update && sudo apt install -y -qq transmission
+fi
+
+echo "Install vscode"
+if [ "$DISTRO" == "Pop" ]
+then
+	sudo apt install -y -qq code
+else
+	wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
+	sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+	sudo apt update
+	sudo apt install code
+fi
+
+echo "Install walc Appimage to Applications"
+wget -c https://github.com/$(wget -q https://github.com/cstayyab/WALC/releases -O - | grep "walc.AppImage" | head -n 1 | cut -d '"' -f 2) -P ~/Applications/
+chmod +x ~/Applications/walc.AppImage
 
 
 zsh -c "$SCRIPT_DIR/user_setup.sh"
