@@ -5,10 +5,10 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
     BTRFS_PARTITION=$(sudo blkid | grep TYPE=\"btrfs\" | awk '{ print $1 }' | sed 's/:$//')
     sudo mkdir -p /btrfs_pool
-    mount -o subvolid=5 $BTRFS_PARTITION /btrfs_pool
+    sudo mount -o subvolid=5 $BTRFS_PARTITION /btrfs_pool
     sudo mv /btrfs_pool/root /btrfs_pool/@
     sudo mv /btrfs_pool/home /btrfs_pool/@home
     sudo sed -i 's/subvol=root/subvol=@/' /etc/fstab
     sudo sed -i 's/subvol=home/subvol=@home/' /etc/fstab
-    grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+    sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 fi

@@ -112,7 +112,7 @@ sudo dnf install -y \
     lsd \
     unzip \
     p7zip \
-    p7zip-plugins 
+    p7zip-plugins
 
 echo "build essentials"
 sudo dnf install -y gcc \
