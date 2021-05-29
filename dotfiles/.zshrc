@@ -155,6 +155,5 @@ alias lt='ls --tree'
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
-export DOCKER_HOST=unix:///run/user/1001/docker.sock
 
 rsfetch -PdhHkrstuU@w

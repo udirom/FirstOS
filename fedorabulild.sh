@@ -2,7 +2,7 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-bash -c "$SCRIPT_DIR/setup_btrfs/sh"
+#bash -c "$SCRIPT_DIR/setup_btrfs.sh"
 
 echo "Optimizing dnf"
 sudo echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf
