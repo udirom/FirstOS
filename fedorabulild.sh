@@ -2,7 +2,7 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
-#bash -c "$SCRIPT_DIR/setup_btrfs.sh"
+bash -c "$SCRIPT_DIR/setup_btrfs.sh"
 
 echo "Optimizing dnf"
 sudo echo 'fastestmirror=1' | sudo tee -a /etc/dnf/dnf.conf
@@ -45,6 +45,16 @@ then
 else
     sudo bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
     sudo bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
+fi
+
+computer_model=$(sudo dmidecode | grep -oP 'Version: \KThinkPad X1 Extreme')
+if [ computer_model == "ThinkPad X1 Extreme" ]
+then
+    read -p "Do you want to fix trackpad issues for? (y/N) " -n 1 -r
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        sudo sh -c "echo 'options psmouse synaptics_intertouch=0' >> /etc/modprobe.d/trackpad.conf"
+    fi
 fi
 
 echo "Install Gnome tweaks and extensions"
@@ -156,13 +166,15 @@ sudo dnf install -y gstreamer1-plugins-{bad-\*,good-\*,ugly-\*,base} gstreamer1-
 sudo dnf install -y lame\* --exclude=lame-devel
 sudo dnf group upgrade -y --with-optional Multimedia
 
-
-echo "Power management optimization"
-dnf install -y tlp tlp-rdw
-dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
-dnf install -y https://repo.linrunner.de/fedora/tlp/repos/releases/tlp-release.fc$(rpm -E %fedora).noarch.rpm
-dnf install -y kernel-devel akmod-acpi_call akmod-tp_smapi
-
+read -p "Do you want to install lenovo power optimizations? (y/N) " -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    echo "Power management optimization"
+    sudo dnf install -y tlp tlp-rdw
+    sudo dnf install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+    sudo dnf install -y https://repo.linrunner.de/fedora/tlp/repos/releases/tlp-release.fc$(rpm -E %fedora).noarch.rpm
+    sudo dnf install -y kernel-devel akmod-acpi_call akmod-tp_smapi
+fi
 
 if ! command -v docker &> /dev/null
 then
@@ -179,7 +191,8 @@ then
     sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
     sudo groupadd docker
-    dockerd-rootless-setuptool.sh install --force
+    sudo systemctl start docker
+    #dockerd-rootless-setuptool.sh install --force
     sudo systemctl enable docker.service
     sudo systemctl enable containerd.service
 
