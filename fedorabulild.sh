@@ -277,11 +277,12 @@ wget -c https://github.com/$(wget -q https://github.com/cstayyab/WALC/releases -
 chmod +x ~/Applications/walc.AppImage
 
 
-#echo "Install Telegram"
-#sudo curl -fsSL https://telegram.org/dl/desktop/linux | sudo tar xJf - -C /opt/
-#sudo cp $SCRIPT_DIR/icons/telegram.desktop /usr/share/applications
-
-#sudo update-desktop-database /usr/share/applications
+if ! command -v telegram-desktop &> /dev/null
+then
+    echo "Install Telegram"
+    sudo dnf copr enable -y rommon/telegram
+    sudo dnf install -y telegram-desktop
+fi
 
 if ! command -v starship &> /dev/null
 then
