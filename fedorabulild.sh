@@ -151,7 +151,7 @@ if ! command -v mailspring &> /dev/null
 then
 	echo "Installing Mailspring email client"
 	sudo dnf install -y lsb-core-noarch
-	sudo rpm -i https://github.com$(wget -q https://github.com/Foundry376/Mailspring/releases -O - | egrep "mailspring.+x86_64.rpm" | head -n 1 | cut -d '"' -f 2)
+	sudo rpm -i "https://github.com$(wget -q https://github.com/Foundry376/Mailspring/releases -O - | egrep "mailspring.+x86_64.rpm" | head -n 1 | cut -d '"' -f 2)"
 fi
 
 echo "Install mscore fonts"
