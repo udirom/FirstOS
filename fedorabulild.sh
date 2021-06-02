@@ -207,6 +207,8 @@ then
     echo "Install Jetbrains toolbox"
     chmod +x fedy/plugins/jetbrains-toolbox.plugin/install.sh
     (cd fedy/plugins/jetbrains-toolbox.plugin/ && sudo su root bash -c ./install.sh)
+    # Handle change sync slowness
+    sudo sh -c "echo fs.inotify.max_user_watches=524288 >> /etc/sysctl.conf"
 fi
 
 

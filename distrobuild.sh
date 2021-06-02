@@ -185,6 +185,8 @@ fi
 
 echo "Install Jetbrains Toolbox"
 bash -c "$SCRIPT_DIR/jetbrains-toolbox.sh"
+# Handle change sync slowness
+sudo sh -c "echo fs.inotify.max_user_watches=524288 >> /etc/sysctl.conf"
 
 echo "Install walc Appimage to Applications"
 wget -c https://github.com/$(wget -q https://github.com/cstayyab/WALC/releases -O - | grep "walc.AppImage" | head -n 1 | cut -d '"' -f 2) -P ~/Applications/
