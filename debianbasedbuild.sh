@@ -27,7 +27,7 @@ then
     read -p "Do you want to install Nvidia drivers? (y/N) " -n 1 -r
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
-        sudo apt install -y -qq nvidia-driver-465
+        sudo apt install -y -qq nvidia-driver-460
     fi
 then
 fi
