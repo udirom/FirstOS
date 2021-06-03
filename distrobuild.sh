@@ -2,7 +2,7 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 DISTRO=$(lsb_release -i | awk '{print $3}')
-
+source "$SCRIPT_DIR/debug.sh"
 
 if [ "$DISTRO" == "Fedora" ]
 then
