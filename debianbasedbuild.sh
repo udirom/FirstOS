@@ -21,6 +21,18 @@ then
 	sudo apt install libavcodec-extra vlc -y -qq &>/dev/null
 fi
 
+# Instal Nvidia drivers for Pop
+if [ "$DISTRO" == "Pop" ]
+then
+    read -p "Do you want to install Nvidia drivers? (y/N) " -n 1 -r
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        sudo apt install -y -qq nvidia-driver-465
+    fi
+then
+fi
+
+
 echo "Installing base packages"
 sudo apt install -y -qq \
 		flameshot \
