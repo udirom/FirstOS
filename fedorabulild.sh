@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
-
+source "$SCRIPT_DIR/debug.sh"
 bash -c "$SCRIPT_DIR/setup_btrfs.sh"
 
 echo "Optimizing dnf"
