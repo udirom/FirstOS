@@ -18,9 +18,8 @@ asdf global poetry $(asdf latest poetry)
 
 echo "nodejs"
 asdf plugin add nodejs
-asdf install nodejs latest
-asdf global nodejs $(asdf latest nodejs)
-npm i -g typescript lerna
+asdf install nodejs lts
+asdf global nodejs lts
 
 echo "sqlite"
 asdf plugin add sqlite
