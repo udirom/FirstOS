@@ -29,7 +29,6 @@ then
     then
         sudo apt install -y -qq nvidia-driver-460
     fi
-then
 fi
 
 
@@ -220,7 +219,6 @@ then
 	fi
 
 	#dockerd-rootless-setuptool.sh install
-	sudo groupadd docker
 	sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 	sudo chmod +x /usr/local/bin/docker-compose
 fi
