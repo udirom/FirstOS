@@ -42,7 +42,6 @@ fail() {
   exit 1
 }
 
-alias echo='info'
 
 function get-github-latest-release-path {
     echo $(wget -q https://github.com/$1/$2/releases -O - | egrep "$3" | head -n 1 | cut -d '"' -f 2)
