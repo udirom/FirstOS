@@ -21,6 +21,12 @@ then
 	sudo apt install libavcodec-extra vlc -y -qq &>/dev/null
 fi
 
+# Fix touchpad on Pop
+if [ "$DISTRO" == "Pop" ]
+then
+	sudo sh -c "echo 'options psmouse synaptics_intertouch=0' > /etc/modprobe.d/trackpad.conf"
+fi
+
 # Instal Nvidia drivers for Pop
 #if [ "$DISTRO" == "Pop" ]
 #then
