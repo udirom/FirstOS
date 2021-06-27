@@ -12,3 +12,5 @@
 - Move to Ansible?
 - asdf - install the latest version
 - install MesloLGS fonts
+- If debian btrfs auto install timeshift auto apt snapshot and grub menu
+- install powerlevel10k fonts automatically

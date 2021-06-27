@@ -20,6 +20,7 @@ echo "nodejs"
 asdf plugin add nodejs
 asdf install nodejs lts
 asdf global nodejs lts
+npm i -g typescript
 
 echo "sqlite"
 asdf plugin add sqlite

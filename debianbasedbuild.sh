@@ -11,7 +11,7 @@ sudo apt update -qq &>/dev/null
 sudo apt upgrade -y -qq &>/dev/null
 
 
-# Instal Nvidia drivers for Debian
+# Install Nvidia drivers for Debian
 if [ "$DISTRO" == "Debian" ]
 then
 	echo "This is Debian, installing Nvidia drivers if necessary"
@@ -19,17 +19,17 @@ then
 
 	echo "Installing codecs"
 	sudo apt install libavcodec-extra vlc -y -qq &>/dev/null
+
+	# Fixing bluetooth audio
+	sudo apt install -y -qq pulseaudio-module-bluetooth &>/dev/null
 fi
 
 # Fix touchpad on Pop
-if [ "$DISTRO" == "Pop" ]
-then
-	sudo sh -c "echo 'options psmouse synaptics_intertouch=0' > /etc/modprobe.d/trackpad.conf"
-fi
-
+sudo sh -c "echo 'options psmouse synaptics_intertouch=0' > /etc/modprobe.d/trackpad.conf"
 
 echo "Installing base packages"
 sudo apt install -y -qq \
+        micro \
 		flameshot \
 		ccze \
 		catfish \
@@ -108,6 +108,16 @@ then
 	fi
 fi
 
+if [ "$DISTRO" == "Debian" ]
+then
+	if command -v plasmashell &> /dev/null
+	then
+		sudo apt install -y -qq sddm-theme-debian-breeze
+	fi
+
+	sudo apt install -y -qq printer-driver-all system-config-printer
+fi
+
 ## Flatpak
 if ! command -v flatpak &> /dev/null
 then
@@ -136,6 +146,7 @@ then
 fi
 
 echo "Installing Mailspring email client"
+sudo apt install -y -qq gnome-keyring
 install-github-release-deb-if-missing mailspring Foundry376 Mailspring "mailspring.+amd64.deb"
 
 echo "Installing Spotify"
@@ -155,7 +166,10 @@ then
 	then
 		sudo apt install slack-desktop
 	else
-		curl -s https://packagecloud.io/install/repositories/slacktechnologies/slack/script.deb.sh | sudo bash
+		latest_slack=$(curl -fsSl https://slack.com/intl/en-il/downloads/instructions/ubuntu | grep -Eo "https://downloads.slack-edge.com/linux_releases/.+deb")
+		wget $latest_slack
+		sudo apt install -y -qq ./slack-desktop*.deb
+		rm slack-desktop*
 	fi 
 fi
 
@@ -163,22 +177,10 @@ echo "Install Simplenote"
 install-github-release-deb-if-missing simplenote Automattic simplenote-electron "Simplenote-linux.*amd64.deb"
 
 echo "Install Telegram"
-if [ "$DISTRO" == "Pop" ]
-then
-	sudo apt install -y -qq telegram-desktop
-else
-	sudo add-apt-repository -y ppa:atareao/telegram
-	sudo apt update && sudo apt install -y -qq telegram
-fi
+sudo apt install -y -qq telegram-desktop
 
 echo "Install transmission"
-if [ "$DISTRO" == "Pop" ]
-then
-	sudo apt install -y -qq transmission
-else
-	sudo add-apt-repository -y ppa:transmissionbt/ppa
-	sudo apt update && sudo apt install -y -qq transmission
-fi
+sudo apt install -y -qq transmission
 
 echo "Install vscode"
 if [ "$DISTRO" == "Pop" ]
