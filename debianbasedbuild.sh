@@ -75,6 +75,7 @@ sudo apt install -y -qq \
 		fzf \
 		tmux \
 		vim \
+		wireguard \
 		autojump &>/dev/null
 
 if command -v gnome-shell &> /dev/null
