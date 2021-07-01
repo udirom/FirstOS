@@ -76,6 +76,7 @@ sudo apt install -y -qq \
 		tmux \
 		vim \
 		wireguard \
+		openresolv \
 		autojump &>/dev/null
 
 if command -v gnome-shell &> /dev/null
