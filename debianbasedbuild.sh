@@ -80,6 +80,7 @@ sudo apt install -y -qq \
 		lsof \
 		multitail \
 		bat \
+		ranger \
 		autojump &>/dev/null
 
 if command -v gnome-shell &> /dev/null

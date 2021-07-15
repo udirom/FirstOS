@@ -125,7 +125,8 @@ sudo dnf install -y \
     p7zip-plugins \
     lsof \
     multitail \
-    bat
+    bat \
+    ranger
 
 echo "build essentials"
 sudo dnf install -y gcc \
