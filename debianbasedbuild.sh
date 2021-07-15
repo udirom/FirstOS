@@ -77,6 +77,9 @@ sudo apt install -y -qq \
 		vim \
 		wireguard \
 		openresolv \
+		lsof \
+		multitail \
+		bat \
 		autojump &>/dev/null
 
 if command -v gnome-shell &> /dev/null
