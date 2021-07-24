@@ -203,6 +203,11 @@ then
     sudo dnf autoremove -y
 fi
 
+if ! command -v dive &> /dev/null
+then
+    sudo rpm -i https://github.com$(wget -q https://github.com/wagoodman/dive/releases -O - | egrep "dive.+linux_amd64.rpm" | head -n 1 | cut -d '"' -f 2)
+fi
+
 # Install nonfree apps
 git clone https://github.com/rpmfusion-infra/fedy.git
 

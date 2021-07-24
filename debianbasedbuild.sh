@@ -227,6 +227,9 @@ then
 	sudo chmod +x /usr/local/bin/docker-compose
 fi
 
+echo "Install dive docker image analyzer"
+install-github-release-deb-if-missing dive wagoodman dive "dive.+linux_amd64.deb"
+
 echo "Installing Fonts"
 sudo add-apt-repository multiverse &>/dev/null
 sudo apt update -qq &>/dev/null && sudo apt install ttf-mscorefonts-installer -y -qq
