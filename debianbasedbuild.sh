@@ -191,7 +191,7 @@ then
 fi
 
 echo "Install Simplenote"
-install-github-release-deb-if-missing simplenote Automattic simplenote-electron "Simplenote-linux.*amd64.deb"
+install-github-release-deb-if-missing /opt/Simplenote/simplenote Automattic simplenote-electron "Simplenote-linux.*amd64.deb"
 
 echo "Install Telegram"
 sudo apt install -y -qq telegram-desktop
