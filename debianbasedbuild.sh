@@ -8,7 +8,7 @@ source $SCRIPT_DIR/functions.sh
 
 echo "Update debian apt sources"
 sudo rm /etc/apt/sources.list
-sudo cp $SCRIPT_DIR/debian/sources/list /etc/apt/
+sudo cp $SCRIPT_DIR/debian/sources.list /etc/apt/
 
 echo "Updating system"
 sudo apt update -qq
