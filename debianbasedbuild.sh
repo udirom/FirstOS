@@ -97,14 +97,6 @@ fi
 
 
 #Install from 3rd party repos
-if ! command -v brave-browser &> /dev/null
-then
-    echo "Installing Brave browser"
-	sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg &>/dev/null
-	sudo echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-	sudo apt update -qq &>/dev/null
-	sudo apt install brave-browser -y --no-install-recommends -qq
-fi
 
 ## Timeshift
 if ! command -v timeshift &> /dev/null
@@ -162,14 +154,20 @@ sudo apt install -y -qq gnome-keyring
 install-github-release-deb-if-missing mailspring Foundry376 Mailspring "mailspring.+amd64.deb"
 
 echo "Installing Spotify"
-curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add - 
-sudo echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-sudo apt-get update && sudo apt-get install -y -qq spotify-client
+if ! command -v spotify &> /dev/null
+then
+	curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add - 
+	sudo echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+	sudo apt-get update && sudo apt-get install -y -qq spotify-client
+fi
 
 echo "Install Zoom"
-wget https://zoom.us/client/latest/zoom_amd64.deb
-sudo apt install -y -qq ./zoom_amd64.deb
-rm zoom_amd64.deb
+if ! command -v slack &> /dev/null
+then
+	wget https://zoom.us/client/latest/zoom_amd64.deb
+	sudo apt install -y -qq ./zoom_amd64.deb
+	rm zoom_amd64.deb
+fi
 
 echo "Install Slack"
 if ! command -v slack &> /dev/null
@@ -243,8 +241,8 @@ echo "Install dive docker image analyzer"
 install-github-release-deb-if-missing dive wagoodman dive "dive.+linux_amd64.deb"
 
 echo "Installing Fonts"
-sudo add-apt-repository multiverse &>/dev/null
-sudo apt update -qq &>/dev/null && sudo apt install ttf-mscorefonts-installer -y -qq
+sudo add-apt-repository multiverse
+sudo apt update -qq && sudo apt install ttf-mscorefonts-installer -y -qq
 
 curl -sS https://webinstall.dev/nerdfont | bash &>/dev/null
 
@@ -254,8 +252,22 @@ cd fonts
 cd ..
 rm -Rf fonts
 
+# Install MesloLGS
+mkdir -p $HOME/.fonts
+curl -sLo /home/$HOME/.fonts/MesloLGS\ NF\ Regular.ttf https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+curl -sLo /home/$HOME/.fonts/MesloLGS\ NF\ Bold.ttf https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+curl -sLo /home/$HOME/.fonts/MesloLGS\ NF\ Italic.ttf https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+curl -sLo /home/$HOME/.fonts/MesloLGS\ NF\ Bold\ Italic.ttf https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+
 sudo fc-cache -f -v
-sudo apt autoremove -qq &>/dev/null
+
+echo "Cleanup"
+if [ "$DISTRO" == "Debian" ]
+then
+	sudo apt-get purge -y gnome-2048 aisleriot atomix gnome-chess five-or-more hitori iagno gnome-klotski lightsoff gnome-mahjongg gnome-mines gnome-nibbles quadrapassel four-in-a-row gnome-robots gnome-sudoku swell-foop tali gnome-taquin gnome-tetravex
+fi
+
+sudo apt autoremove -qq
 
 if ! command -v starship &> /dev/null
 then
