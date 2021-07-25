@@ -9,7 +9,7 @@ asdf install python latest
 asdf global python $(asdf latest python)
 
 echo "ipython pipenv"
-pip3 install ipython pipenv
+pip3 install ipython pipenv saws
 
 echo "poetry"
 asdf plugin add poetry

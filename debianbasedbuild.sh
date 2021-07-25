@@ -263,10 +263,12 @@ sudo fc-cache -f -v
 echo "Cleanup"
 if [ "$DISTRO" == "Debian" ]
 then
-	sudo apt-get purge -y gnome-2048 aisleriot atomix gnome-chess five-or-more hitori iagno gnome-klotski lightsoff gnome-mahjongg gnome-mines gnome-nibbles quadrapassel four-in-a-row gnome-robots gnome-sudoku swell-foop tali gnome-taquin gnome-tetravex
+	sudo apt-get purge -y hdate-applet goldendict kasumi evolution cheese rhythmbox shotwell mozc-utils-gui mlterm uim im-config xterm gnome-2048 aisleriot atomix gnome-chess five-or-more hitori iagno gnome-klotski lightsoff gnome-mahjongg gnome-mines gnome-nibbles quadrapassel four-in-a-row gnome-robots gnome-sudoku swell-foop tali gnome-taquin gnome-tetravex
+	sudo apt-get purge fcitx*
+	sudo apt-get purge xiterm+thai
 fi
 
-sudo apt autoremove -qq
+sudo apt autoremove -y -qq
 
 if ! command -v starship &> /dev/null
 then
