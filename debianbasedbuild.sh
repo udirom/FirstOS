@@ -86,7 +86,8 @@ sudo apt install -y -qq \
 		bat \
 		ranger \
 		cmake \
-		autojump
+		autojump \
+		chromium
 
 if command -v gnome-shell &> /dev/null
 then
