@@ -241,7 +241,6 @@ echo "Install dive docker image analyzer"
 install-github-release-deb-if-missing dive wagoodman dive "dive.+linux_amd64.deb"
 
 echo "Installing Fonts"
-sudo add-apt-repository multiverse
 sudo apt update -qq && sudo apt install ttf-mscorefonts-installer -y -qq
 
 curl -sS https://webinstall.dev/nerdfont | bash &>/dev/null
