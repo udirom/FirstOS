@@ -7,8 +7,8 @@ source "$SCRIPT_DIR/debug.sh"
 source $SCRIPT_DIR/functions.sh
 
 echo "Updating system"
-sudo apt update -qq &>/dev/null
-sudo apt upgrade -y -qq &>/dev/null
+sudo apt update -qq
+sudo apt upgrade -y -qq
 
 
 # Install Nvidia drivers for Debian
@@ -18,10 +18,10 @@ then
 	sh -c "$SCRIPT_DIR/nvidia.sh"
 
 	echo "Installing codecs"
-	sudo apt install libavcodec-extra vlc -y -qq &>/dev/null
+	sudo apt install libavcodec-extra vlc -y -qq
 
 	# Fixing bluetooth audio
-	sudo apt install -y -qq pulseaudio-module-bluetooth &>/dev/null
+	sudo apt install -y -qq pulseaudio-module-bluetooth
 fi
 
 # Fix touchpad on Pop
@@ -82,12 +82,12 @@ sudo apt install -y -qq \
 		bat \
 		ranger \
 		cmake \
-		autojump &>/dev/null
+		autojump
 
 if command -v gnome-shell &> /dev/null
 then
   echo "Install Gnome tweaks and extensions"
-	sudo apt install gnome-shell-extensions gnome-tweaks -y -qq &>/dev/null
+	sudo apt install gnome-shell-extensions gnome-tweaks -y -qq
 fi
 
 
@@ -98,7 +98,7 @@ then
 	sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg &>/dev/null
 	sudo echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 	sudo apt update -qq &>/dev/null
-	sudo apt install brave-browser -y --no-install-recommends -qq &>/dev/null
+	sudo apt install brave-browser -y --no-install-recommends -qq
 fi
 
 ## Timeshift
@@ -107,11 +107,11 @@ then
 	echo "Installing timeshift"
 	if [ "$DISTRO" == "Debian" ]
 	then
-		sudo apt install timeshift -y -qq &>/dev/null
+		sudo apt install timeshift -y -qq
 	else
 	  sudo add-apt-repository -y ppa:teejee2008/ppa
 		sudo apt update -qq &>/dev/null
-		sudo apt install timeshift -y -qq &>/dev/null
+		sudo apt install timeshift -y -qq
 	fi
 fi
 
@@ -212,9 +212,8 @@ bash -c "$SCRIPT_DIR/jetbrains-toolbox.sh"
 # Handle change sync slowness
 sudo sh -c "echo fs.inotify.max_user_watches=524288 >> /etc/sysctl.conf"
 
-echo "Install walc Appimage to Applications"
-wget -c https://github.com/$(wget -q https://github.com/cstayyab/WALC/releases -O - | grep "walc.AppImage" | head -n 1 | cut -d '"' -f 2) -P ~/Applications/
-chmod +x ~/Applications/walc.AppImage
+echo "Install Whatsapp for linux"
+install-github-release-deb-if-missing whatsapp-for-linux eneshecan whatsapp-for-linux "whatsapp-for-linux.+amd64.deb"
 
 if ! command -v docker &> /dev/null
 then

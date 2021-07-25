@@ -20,7 +20,7 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 
 # Path to your oh-my-zsh installation.
 ZSH_DISABLE_COMPFIX=true
-export ZSH="/home/udi/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -151,7 +151,7 @@ alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
-alias cat='bat'
+alias cat='batcat'
 
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
