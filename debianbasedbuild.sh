@@ -173,6 +173,13 @@ then
 	then
 		sudo apt install slack-desktop
 	else
+		wget http://http.us.debian.org/debian/pool/main/libi/libindicator/libindicator3-7_0.5.0-4_amd64.deb
+		wget http://http.us.debian.org/debian/pool/main/liba/libappindicator/libappindicator3-1_0.4.92-8_amd64.deb
+		sudo apt install -y ./libindicator3-7_0.5.0-4_amd64.deb
+		sudo apt install -y ./libappindicator3-1_0.4.92-8_amd64.deb
+		rm libindicator3-7_0.5.0-4_amd64.deb
+		rm libappindicator3-1_0.4.92-8_amd64.deb
+
 		latest_slack=$(curl -fsSl https://slack.com/intl/en-il/downloads/instructions/ubuntu | grep -Eo "https://downloads.slack-edge.com/linux_releases/.+deb")
 		wget $latest_slack
 		sudo apt install -y -qq ./slack-desktop*.deb
