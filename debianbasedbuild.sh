@@ -81,6 +81,7 @@ sudo apt install -y -qq \
 		multitail \
 		bat \
 		ranger \
+		cmake \
 		autojump &>/dev/null
 
 if command -v gnome-shell &> /dev/null

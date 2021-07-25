@@ -126,7 +126,8 @@ sudo dnf install -y \
     lsof \
     multitail \
     bat \
-    ranger
+    ranger \
+    cmake
 
 echo "build essentials"
 sudo dnf install -y gcc \
