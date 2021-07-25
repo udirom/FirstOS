@@ -185,7 +185,7 @@ then
 		rm libindicator3-7_0.5.0-4_amd64.deb
 		rm libappindicator3-1_0.4.92-8_amd64.deb
 
-		latest_slack=$(curl -fsSl https://slack.com/intl/en-il/downloads/instructions/ubuntu | grep -Eo "https://downloads.slack-edge.com/linux_releases/.+deb")
+		latest_slack=$(curl -fsSl https://slack.com/intl/en-il/downloads/instructions/ubuntu | grep -Eo "https://downloads.slack-edge.com/releases/linux/.+deb")
 		wget $latest_slack
 		sudo apt install -y -qq ./slack-desktop*.deb
 		rm slack-desktop*
