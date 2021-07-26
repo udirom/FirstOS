@@ -25,7 +25,7 @@ then
 	sudo apt install libavcodec-extra vlc -y -qq
 
 	# Fixing bluetooth audio
-	sudo apt install -y -qq pulseaudio-module-bluetooth
+	sudo apt install -y -qq pulseaudio-module-bluetooth pavucontrol
 fi
 
 # Fix touchpad on Pop
