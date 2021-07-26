@@ -3,8 +3,17 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 DISTRO=$(lsb_release -i | awk '{print $3}')
 source "$SCRIPT_DIR/debug.sh"
-
 source $SCRIPT_DIR/functions.sh
+
+echo "Cleanup bloatware"
+if [ "$DISTRO" == "Debian" ]
+then
+	sudo apt-get purge -y hdate-applet goldendict kasumi evolution cheese rhythmbox shotwell mozc-utils-gui mlterm uim im-config xterm gnome-2048 aisleriot atomix gnome-chess five-or-more hitori iagno gnome-klotski lightsoff gnome-mahjongg gnome-mines gnome-nibbles quadrapassel four-in-a-row gnome-robots gnome-sudoku swell-foop tali gnome-taquin gnome-tetravex
+	sudo apt-get purge -y fcitx*
+	sudo apt-get purge -y xiterm+thai
+	sudo apt-get purge -y task-albanian-desktop task-amharic-desktop task-arabic-desktop task-asturian-desktop task-basque-desktop task-belarusian-desktop task-bengali-desktop task-bosnian-desktop task-brazilian-portuguese-desktop task-british-desktop task-bulgarian-desktop task-catalan-desktop task-chinese-s-desktop task-chinese-t-desktop task-croatian-desktop task-cyrillic-desktop task-czech-desktop task-danish-desktop task-desktop task-dutch-desktop task-dzongkha-desktop task-esperanto-desktop task-estonian-desktop task-finnish-desktop task-french-desktop task-galician-desktop task-georgian-desktop task-german-desktop task-gnome-desktop task-greek-desktop task-gujarati-desktop task-hindi-desktop task-hungarian-desktop task-icelandic-desktop task-indonesian-desktop task-irish-desktop task-italian-desktop task-japanese-desktop task-japanese-gnome-desktop task-kannada-desktop task-kazakh-desktop task-khmer-desktop task-korean-desktop task-korean-gnome-desktop task-kurdish-desktop task-latvian-desktop task-lithuanian-desktop task-macedonian-desktop task-malayalam-desktop task-malayalam-gnome-desktop task-marathi-desktop task-nepali-desktop task-northern-sami-desktop task-norwegian-desktop task-persian-desktop task-polish-desktop task-portuguese-desktop task-punjabi-desktop task-romanian-desktop task-russian-desktop task-serbian-desktop task-sinhala-desktop task-slovak-desktop task-slovenian-desktop task-south-african-english-desktop task-spanish-desktop task-swedish-desktop task-tamil-desktop task-tamil-gnome-desktop task-telugu-desktop task-telugu-gnome-desktop task-thai-desktop task-thai-gnome-desktop task-turkish-desktop task-ukrainian-desktop task-uyghur-desktop task-vietnamese-desktop task-welsh-desktop task-xhosa-desktop thunderbird thunderbird-l10n-ja
+fi
+
 
 echo "Update debian apt sources"
 sudo rm /etc/apt/sources.list
@@ -260,13 +269,6 @@ curl -sLo $HOME/.fonts/MesloLGS\ NF\ Bold\ Italic.ttf https://github.com/romkatv
 
 sudo fc-cache -f -v
 
-echo "Cleanup"
-if [ "$DISTRO" == "Debian" ]
-then
-	sudo apt-get purge -y hdate-applet goldendict kasumi evolution cheese rhythmbox shotwell mozc-utils-gui mlterm uim im-config xterm gnome-2048 aisleriot atomix gnome-chess five-or-more hitori iagno gnome-klotski lightsoff gnome-mahjongg gnome-mines gnome-nibbles quadrapassel four-in-a-row gnome-robots gnome-sudoku swell-foop tali gnome-taquin gnome-tetravex
-	sudo apt-get purge -y fcitx*
-	sudo apt-get purge -y xiterm+thai
-fi
 
 sudo apt autoremove -y -qq
 
