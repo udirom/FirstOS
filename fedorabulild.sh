@@ -144,6 +144,11 @@ then
     sudo rpm -i https://github.com$(wget -q https://github.com/TheAssassin/AppImageLauncher/releases -O - | egrep "appimagelauncher.+x86_64.rpm" | head -n 1 | cut -d '"' -f 2)
 fi
 
+if ! command -v gh &> /dev/null
+then
+    echo "Installing Github CLI"
+    sudo rpm -i https://github.com$(wget -q https://github.com/cli/cli/releases -O - | egrep "gh_.+linux_amd64.rpm" | head -n 1 | cut -d '"' -f 2)
+
 if ! command -v rsfetch &> /dev/null
 then
 	echo "Installing rsfetch (fast neofetch)"

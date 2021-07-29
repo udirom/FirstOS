@@ -146,6 +146,8 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 echo "Installing AppImageLauncher"
 install-github-release-deb-if-missing appimagelauncherd TheAssassin AppImageLauncher "appimagelauncher.+amd64.deb"
 
+echo "Installing github CLI"
+install-github-release-deb-if-missing gh cli cli "gh_.+linux_amd64.deb"
 
 echo "Installing LSD (colored ls)"
 install-github-release-deb-if-missing lsd Peltoche lsd "lsd_.*_amd64.deb"
