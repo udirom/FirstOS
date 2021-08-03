@@ -96,7 +96,8 @@ sudo apt install -y -qq \
 		ranger \
 		cmake \
 		autojump \
-		chromium
+		chromium \
+		glances
 
 if command -v gnome-shell &> /dev/null
 then

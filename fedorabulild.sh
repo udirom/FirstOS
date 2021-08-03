@@ -127,7 +127,10 @@ sudo dnf install -y \
     multitail \
     bat \
     ranger \
-    cmake
+    cmake \
+    glances
+
+sudo mv /usr/bin/bat /usr/bin/batcat
 
 echo "build essentials"
 sudo dnf install -y gcc \
