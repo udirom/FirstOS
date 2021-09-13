@@ -3,12 +3,25 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 DISTRO=$(lsb_release -i | awk '{print $3}')
 source "$SCRIPT_DIR/debug.sh"
-
 source $SCRIPT_DIR/functions.sh
 
+echo "Cleanup bloatware"
+if [ "$DISTRO" == "Debian" ]
+then
+	sudo apt-get purge -y hdate-applet goldendict kasumi evolution cheese rhythmbox shotwell mozc-utils-gui mlterm uim im-config xterm gnome-2048 aisleriot atomix gnome-chess five-or-more hitori iagno gnome-klotski lightsoff gnome-mahjongg gnome-mines gnome-nibbles quadrapassel four-in-a-row gnome-robots gnome-sudoku swell-foop tali gnome-taquin gnome-tetravex
+	sudo apt-get purge -y fcitx*
+	sudo apt-get purge -y xiterm+thai
+	sudo apt-get purge -y task-albanian-desktop task-amharic-desktop task-arabic-desktop task-asturian-desktop task-basque-desktop task-belarusian-desktop task-bengali-desktop task-bosnian-desktop task-brazilian-portuguese-desktop task-british-desktop task-bulgarian-desktop task-catalan-desktop task-chinese-s-desktop task-chinese-t-desktop task-croatian-desktop task-cyrillic-desktop task-czech-desktop task-danish-desktop task-desktop task-dutch-desktop task-dzongkha-desktop task-esperanto-desktop task-estonian-desktop task-finnish-desktop task-french-desktop task-galician-desktop task-georgian-desktop task-german-desktop task-gnome-desktop task-greek-desktop task-gujarati-desktop task-hindi-desktop task-hungarian-desktop task-icelandic-desktop task-indonesian-desktop task-irish-desktop task-italian-desktop task-japanese-desktop task-japanese-gnome-desktop task-kannada-desktop task-kazakh-desktop task-khmer-desktop task-korean-desktop task-korean-gnome-desktop task-kurdish-desktop task-latvian-desktop task-lithuanian-desktop task-macedonian-desktop task-malayalam-desktop task-malayalam-gnome-desktop task-marathi-desktop task-nepali-desktop task-northern-sami-desktop task-norwegian-desktop task-persian-desktop task-polish-desktop task-portuguese-desktop task-punjabi-desktop task-romanian-desktop task-russian-desktop task-serbian-desktop task-sinhala-desktop task-slovak-desktop task-slovenian-desktop task-south-african-english-desktop task-spanish-desktop task-swedish-desktop task-tamil-desktop task-tamil-gnome-desktop task-telugu-desktop task-telugu-gnome-desktop task-thai-desktop task-thai-gnome-desktop task-turkish-desktop task-ukrainian-desktop task-uyghur-desktop task-vietnamese-desktop task-welsh-desktop task-xhosa-desktop thunderbird thunderbird-l10n-ja
+fi
+
+
+echo "Update debian apt sources"
+sudo rm /etc/apt/sources.list
+sudo cp $SCRIPT_DIR/debian/sources.list /etc/apt/
+
 echo "Updating system"
-sudo apt update -qq &>/dev/null
-sudo apt upgrade -y -qq &>/dev/null
+sudo apt update -qq
+sudo apt upgrade -y -qq
 
 
 # Install Nvidia drivers for Debian
@@ -18,10 +31,10 @@ then
 	sh -c "$SCRIPT_DIR/nvidia.sh"
 
 	echo "Installing codecs"
-	sudo apt install libavcodec-extra vlc -y -qq &>/dev/null
+	sudo apt install libavcodec-extra vlc -y -qq
 
 	# Fixing bluetooth audio
-	sudo apt install -y -qq pulseaudio-module-bluetooth &>/dev/null
+	sudo apt install -y -qq pulseaudio-module-bluetooth pavucontrol
 fi
 
 # Fix touchpad on Pop
@@ -81,25 +94,24 @@ sudo apt install -y -qq \
 		multitail \
 		bat \
 		ranger \
+<<<<<<< HEAD
 		xdg-utils \
 		autojump &>/dev/null
+=======
+		cmake \
+		autojump \
+		chromium \
+		glances
+>>>>>>> fa19d7055acecfa4be50b2e1a55924eb100eadd6
 
 if command -v gnome-shell &> /dev/null
 then
   echo "Install Gnome tweaks and extensions"
-	sudo apt install gnome-shell-extensions gnome-tweaks -y -qq &>/dev/null
+	sudo apt install gnome-shell-extensions gnome-tweaks -y -qq
 fi
 
 
 #Install from 3rd party repos
-if ! command -v brave-browser &> /dev/null
-then
-    echo "Installing Brave browser"
-	sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg &>/dev/null
-	sudo echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-	sudo apt update -qq &>/dev/null
-	sudo apt install brave-browser -y --no-install-recommends -qq &>/dev/null
-fi
 
 ## Timeshift
 if ! command -v timeshift &> /dev/null
@@ -107,11 +119,11 @@ then
 	echo "Installing timeshift"
 	if [ "$DISTRO" == "Debian" ]
 	then
-		sudo apt install timeshift -y -qq &>/dev/null
+		sudo apt install timeshift -y -qq
 	else
 	  sudo add-apt-repository -y ppa:teejee2008/ppa
 		sudo apt update -qq &>/dev/null
-		sudo apt install timeshift -y -qq &>/dev/null
+		sudo apt install timeshift -y -qq
 	fi
 fi
 
@@ -140,6 +152,8 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 echo "Installing AppImageLauncher"
 install-github-release-deb-if-missing appimagelauncherd TheAssassin AppImageLauncher "appimagelauncher.+amd64.deb"
 
+echo "Installing github CLI"
+install-github-release-deb-if-missing gh cli cli "gh_.+linux_amd64.deb"
 
 echo "Installing LSD (colored ls)"
 install-github-release-deb-if-missing lsd Peltoche lsd "lsd_.*_amd64.deb"
@@ -157,14 +171,20 @@ sudo apt install -y -qq gnome-keyring
 install-github-release-deb-if-missing mailspring Foundry376 Mailspring "mailspring.+amd64.deb"
 
 echo "Installing Spotify"
-curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add - 
-sudo echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-sudo apt-get update && sudo apt-get install -y -qq spotify-client
+if ! command -v spotify &> /dev/null
+then
+	curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add - 
+	sudo echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+	sudo apt-get update && sudo apt-get install -y -qq spotify-client
+fi
 
 echo "Install Zoom"
-wget https://zoom.us/client/latest/zoom_amd64.deb
-sudo apt install -y -qq ./zoom_amd64.deb
-rm zoom_amd64.deb
+if ! command -v slack &> /dev/null
+then
+	wget https://zoom.us/client/latest/zoom_amd64.deb
+	sudo apt install -y -qq ./zoom_amd64.deb
+	rm zoom_amd64.deb
+fi
 
 echo "Install Slack"
 if ! command -v slack &> /dev/null
@@ -173,7 +193,14 @@ then
 	then
 		sudo apt install slack-desktop
 	else
-		latest_slack=$(curl -fsSl https://slack.com/intl/en-il/downloads/instructions/ubuntu | grep -Eo "https://downloads.slack-edge.com/linux_releases/.+deb")
+		wget http://http.us.debian.org/debian/pool/main/libi/libindicator/libindicator3-7_0.5.0-4_amd64.deb
+		wget http://http.us.debian.org/debian/pool/main/liba/libappindicator/libappindicator3-1_0.4.92-8_amd64.deb
+		sudo apt install -y ./libindicator3-7_0.5.0-4_amd64.deb
+		sudo apt install -y ./libappindicator3-1_0.4.92-8_amd64.deb
+		rm libindicator3-7_0.5.0-4_amd64.deb
+		rm libappindicator3-1_0.4.92-8_amd64.deb
+
+		latest_slack=$(curl -fsSl https://slack.com/intl/en-il/downloads/instructions/ubuntu | grep -Eo "https://downloads.slack-edge.com/releases/linux/.+deb")
 		wget $latest_slack
 		sudo apt install -y -qq ./slack-desktop*.deb
 		rm slack-desktop*
@@ -181,7 +208,7 @@ then
 fi
 
 echo "Install Simplenote"
-install-github-release-deb-if-missing simplenote Automattic simplenote-electron "Simplenote-linux.*amd64.deb"
+install-github-release-deb-if-missing /opt/Simplenote/simplenote Automattic simplenote-electron "Simplenote-linux.*amd64.deb"
 
 echo "Install Telegram"
 sudo apt install -y -qq telegram-desktop
@@ -205,9 +232,8 @@ bash -c "$SCRIPT_DIR/jetbrains-toolbox.sh"
 # Handle change sync slowness
 sudo sh -c "echo fs.inotify.max_user_watches=524288 >> /etc/sysctl.conf"
 
-echo "Install walc Appimage to Applications"
-wget -c https://github.com/$(wget -q https://github.com/cstayyab/WALC/releases -O - | grep "walc.AppImage" | head -n 1 | cut -d '"' -f 2) -P ~/Applications/
-chmod +x ~/Applications/walc.AppImage
+echo "Install Whatsapp for linux"
+install-github-release-deb-if-missing whatsapp-for-linux eneshecan whatsapp-for-linux "whatsapp-for-linux.+amd64.deb"
 
 if ! command -v docker &> /dev/null
 then
@@ -228,9 +254,11 @@ then
 	sudo chmod +x /usr/local/bin/docker-compose
 fi
 
+echo "Install dive docker image analyzer"
+install-github-release-deb-if-missing dive wagoodman dive "dive.+linux_amd64.deb"
+
 echo "Installing Fonts"
-sudo add-apt-repository multiverse &>/dev/null
-sudo apt update -qq &>/dev/null && sudo apt install ttf-mscorefonts-installer -y -qq
+sudo apt update -qq && sudo apt install ttf-mscorefonts-installer -y -qq
 
 curl -sS https://webinstall.dev/nerdfont | bash &>/dev/null
 
@@ -240,8 +268,17 @@ cd fonts
 cd ..
 rm -Rf fonts
 
+# Install MesloLGS
+mkdir -p $HOME/.fonts
+curl -sLo $HOME/.fonts/MesloLGS\ NF\ Regular.ttf https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+curl -sLo $HOME/.fonts/MesloLGS\ NF\ Bold.ttf https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+curl -sLo $HOME/.fonts/MesloLGS\ NF\ Italic.ttf https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+curl -sLo $HOME/.fonts/MesloLGS\ NF\ Bold\ Italic.ttf https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+
 sudo fc-cache -f -v
-sudo apt autoremove -qq &>/dev/null
+
+
+sudo apt autoremove -y -qq
 
 if ! command -v starship &> /dev/null
 then

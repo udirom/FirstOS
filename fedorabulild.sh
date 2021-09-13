@@ -126,7 +126,11 @@ sudo dnf install -y \
     lsof \
     multitail \
     bat \
-    ranger
+    ranger \
+    cmake \
+    glances
+
+sudo mv /usr/bin/bat /usr/bin/batcat
 
 echo "build essentials"
 sudo dnf install -y gcc \
@@ -142,6 +146,11 @@ then
     echo "Install Appimagelauncher"
     sudo rpm -i https://github.com$(wget -q https://github.com/TheAssassin/AppImageLauncher/releases -O - | egrep "appimagelauncher.+x86_64.rpm" | head -n 1 | cut -d '"' -f 2)
 fi
+
+if ! command -v gh &> /dev/null
+then
+    echo "Installing Github CLI"
+    sudo rpm -i https://github.com$(wget -q https://github.com/cli/cli/releases -O - | egrep "gh_.+linux_amd64.rpm" | head -n 1 | cut -d '"' -f 2)
 
 if ! command -v rsfetch &> /dev/null
 then
@@ -201,6 +210,11 @@ then
     sudo systemctl enable containerd.service
 
     sudo dnf autoremove -y
+fi
+
+if ! command -v dive &> /dev/null
+then
+    sudo rpm -i https://github.com$(wget -q https://github.com/wagoodman/dive/releases -O - | egrep "dive.+linux_amd64.rpm" | head -n 1 | cut -d '"' -f 2)
 fi
 
 # Install nonfree apps
