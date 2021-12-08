@@ -49,7 +49,8 @@ brew install --cask firefox \
                     chromium \
                     whatsapp \
                     slack \
-                    iterm2
+                    iterm2 \
+                    authy
 
 
 curl -sLo $HOME/Library/Fonts/MesloLGS\ NF\ Regular.ttf https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
