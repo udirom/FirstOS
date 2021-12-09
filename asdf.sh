@@ -1,20 +1,24 @@
 #!/bin/zsh
+
 echo "Install asdf"
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0
 source ~/.zshrc
 
 echo "python"
-asdf plugin add python
-asdf install python latest
-asdf global python $(asdf latest python)
+
+if [ "$(uname)" != "Darwin" ]; then
+    asdf plugin add python
+    asdf install python latest
+    asdf global python $(asdf latest python)
+else
+    pyenv install 3.9.4
+    pyenv global 3.9.4
+fi
+
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
 
 echo "ipython pipenv"
 pip3 install ipython pipenv saws
-
-echo "poetry"
-asdf plugin add poetry
-asdf install poetry latest
-asdf global poetry $(asdf latest poetry)
 
 echo "nodejs"
 asdf plugin add nodejs

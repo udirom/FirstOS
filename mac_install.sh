@@ -38,7 +38,13 @@ brew install gh \
              cmake \
              lsd \
              neofetch \
-             asdf
+             asdf \
+             openssl \
+             readline \
+             sqlite3 \
+             xz \
+             zlib \
+             pyenv
 
 brew install --cask firefox \
                     bitwarden \
