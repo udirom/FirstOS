@@ -21,6 +21,7 @@ asdf plugin add nodejs
 asdf install nodejs lts
 asdf global nodejs lts
 npm i -g typescript
+npm i -g lerna
 
 echo "sqlite"
 asdf plugin add sqlite
