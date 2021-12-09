@@ -9,6 +9,8 @@ if [ "$(uname)" != "Darwin" ]; then
 fi
 
 info "Docker needs to be installed manually at this point"
+info "Installing rosetta"
+softwareupdate --install-rosetta
 
 if ! command -v brew &> /dev/null
 then
@@ -17,8 +19,15 @@ then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+alias brew86="arch -x86_64 /usr/local/bin/brew"
+
 brew install gh \
              git \
+             openssl \
+             readline \
+             xz \
+             zlib \
              gnupg \
              micro \
              ccze \
@@ -39,12 +48,9 @@ brew install gh \
              lsd \
              neofetch \
              asdf \
-             openssl \
              readline \
              sqlite3 \
-             xz \
-             zlib \
-             pyenv
+             xz
 
 brew install --cask firefox \
                     bitwarden \
@@ -60,6 +66,7 @@ brew install --cask firefox \
                     authy \
                     rectangle
 
+brew86 install python@3.7
 
 curl -sLo $HOME/Library/Fonts/MesloLGS\ NF\ Regular.ttf https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
 curl -sLo $HOME/Library/Fonts/MesloLGS\ NF\ Bold.ttf https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
