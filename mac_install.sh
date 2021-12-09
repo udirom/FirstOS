@@ -53,11 +53,12 @@ brew install --cask firefox \
                     visual-studio-code \
                     datagrip \
                     spotify \
-                    chromium \
+                    google-chrome \
                     whatsapp \
                     slack \
                     iterm2 \
-                    authy
+                    authy \
+                    rectangle
 
 
 curl -sLo $HOME/Library/Fonts/MesloLGS\ NF\ Regular.ttf https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
