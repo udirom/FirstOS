@@ -1,4 +1,4 @@
-#!/usr/bin/zsh
+#!/bin/zsh
 echo "Install asdf"
 git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.0
 source ~/.zshrc
