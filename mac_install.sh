@@ -19,6 +19,7 @@ fi
 
 brew install gh \
              git \
+             gnupg \
              micro \
              ccze \
              rar \
