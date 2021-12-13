@@ -18,8 +18,8 @@ pip3 install ipython pipenv saws
 
 echo "nodejs"
 asdf plugin add nodejs
-asdf install nodejs 14.8.2
-asdf global nodejs 14.8.2
+asdf install nodejs 14.18.2
+asdf global nodejs 14.18.2
 npm i -g typescript
 npm i -g lerna
 

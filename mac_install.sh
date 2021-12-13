@@ -15,12 +15,9 @@ softwareupdate --install-rosetta
 if ! command -v brew &> /dev/null
 then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/udiromano/.zprofile
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
-
-arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-alias brew86="arch -x86_64 /usr/local/bin/brew"
 
 brew install gh \
              git \
@@ -65,6 +62,9 @@ brew install --cask firefox \
                     iterm2 \
                     authy \
                     rectangle
+
+arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+alias brew86="arch -x86_64 /usr/local/bin/brew"
 
 brew86 install python@3.7
 
