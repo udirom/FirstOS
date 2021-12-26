@@ -47,7 +47,10 @@ brew install gh \
              asdf \
              readline \
              sqlite3 \
-             xz
+             xz \
+             watch \
+             dive \
+             yq
 
 brew install --cask firefox \
                     bitwarden \
@@ -61,7 +64,8 @@ brew install --cask firefox \
                     slack \
                     iterm2 \
                     authy \
-                    rectangle
+                    rectangle \
+                    postman
 
 arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 alias brew86="arch -x86_64 /usr/local/bin/brew"
