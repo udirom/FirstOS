@@ -14,15 +14,16 @@ then
 	sudo apt-get purge -y task-albanian-desktop task-amharic-desktop task-arabic-desktop task-asturian-desktop task-basque-desktop task-belarusian-desktop task-bengali-desktop task-bosnian-desktop task-brazilian-portuguese-desktop task-british-desktop task-bulgarian-desktop task-catalan-desktop task-chinese-s-desktop task-chinese-t-desktop task-croatian-desktop task-cyrillic-desktop task-czech-desktop task-danish-desktop task-desktop task-dutch-desktop task-dzongkha-desktop task-esperanto-desktop task-estonian-desktop task-finnish-desktop task-french-desktop task-galician-desktop task-georgian-desktop task-german-desktop task-gnome-desktop task-greek-desktop task-gujarati-desktop task-hindi-desktop task-hungarian-desktop task-icelandic-desktop task-indonesian-desktop task-irish-desktop task-italian-desktop task-japanese-desktop task-japanese-gnome-desktop task-kannada-desktop task-kazakh-desktop task-khmer-desktop task-korean-desktop task-korean-gnome-desktop task-kurdish-desktop task-latvian-desktop task-lithuanian-desktop task-macedonian-desktop task-malayalam-desktop task-malayalam-gnome-desktop task-marathi-desktop task-nepali-desktop task-northern-sami-desktop task-norwegian-desktop task-persian-desktop task-polish-desktop task-portuguese-desktop task-punjabi-desktop task-romanian-desktop task-russian-desktop task-serbian-desktop task-sinhala-desktop task-slovak-desktop task-slovenian-desktop task-south-african-english-desktop task-spanish-desktop task-swedish-desktop task-tamil-desktop task-tamil-gnome-desktop task-telugu-desktop task-telugu-gnome-desktop task-thai-desktop task-thai-gnome-desktop task-turkish-desktop task-ukrainian-desktop task-uyghur-desktop task-vietnamese-desktop task-welsh-desktop task-xhosa-desktop thunderbird thunderbird-l10n-ja
 fi
 
-
-echo "Update debian apt sources"
-sudo rm /etc/apt/sources.list
-sudo cp $SCRIPT_DIR/debian/sources.list /etc/apt/
+if [ "$DISTRO" == "Debian" ]
+then
+	echo "Update debian apt sources"
+	sudo rm /etc/apt/sources.list
+	sudo cp $SCRIPT_DIR/debian/sources.list /etc/apt/
+fi
 
 echo "Updating system"
 sudo apt update -qq
 sudo apt upgrade -y -qq
-
 
 # Install Nvidia drivers for Debian
 if [ "$DISTRO" == "Debian" ]
@@ -38,7 +39,7 @@ then
 fi
 
 # Fix touchpad on Pop
-sudo sh -c "echo 'options psmouse synaptics_intertouch=0' > /etc/modprobe.d/trackpad.conf"
+#sudo sh -c "echo 'options psmouse synaptics_intertouch=0' > /etc/modprobe.d/trackpad.conf"
 
 echo "Installing base packages"
 sudo apt install -y -qq \
@@ -116,31 +117,31 @@ then
 	then
 		sudo apt install timeshift -y -qq
 	else
-	  sudo add-apt-repository -y ppa:teejee2008/ppa
+	    sudo add-apt-repository -y ppa:teejee2008/ppa
 		sudo apt update -qq &>/dev/null
 		sudo apt install timeshift -y -qq
 	fi
 fi
 
-if [ "$DISTRO" == "Debian" ]
-then
-	if command -v plasmashell &> /dev/null
-	then
-		sudo apt install -y -qq sddm-theme-debian-breeze
-	fi
+#if [ "$DISTRO" == "Debian" ]
+#then
+#	if command -v plasmashell &> /dev/null
+#	then
+#		sudo apt install -y -qq sddm-theme-debian-breeze
+#	fi
 
-	sudo apt install -y -qq printer-driver-all system-config-printer
-fi
+#	sudo apt install -y -qq printer-driver-all system-config-printer
+#fi
 
 ## Flatpak
-if ! command -v flatpak &> /dev/null
-then
-    echo "Installing flatpak"
-	sudo apt install flatpak -y -qq
-	dpkg -l | grep -qw gnome-software || sudo apt install gnome-software-plugin-flatpak &>/dev/null
-fi
+#if ! command -v flatpak &> /dev/null
+#then
+#    echo "Installing flatpak"
+#	sudo apt install flatpak -y -qq
+#	dpkg -l | grep -qw gnome-software || sudo apt install gnome-software-plugin-flatpak &>/dev/null
+#fi
 
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo &>/dev/null
+#flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo &>/dev/null
 
 
 #Manual installs
@@ -161,55 +162,55 @@ then
 	sudo mv rsfetch /usr/local/bin
 fi
 
-echo "Installing Mailspring email client"
-sudo apt install -y -qq gnome-keyring
-install-github-release-deb-if-missing mailspring Foundry376 Mailspring "mailspring.+amd64.deb"
+#echo "Installing Mailspring email client"
+#sudo apt install -y -qq gnome-keyring
+#install-github-release-deb-if-missing mailspring Foundry376 Mailspring "mailspring.+amd64.deb"
 
-echo "Installing Spotify"
-if ! command -v spotify &> /dev/null
-then
-	curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add - 
-	sudo echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-	sudo apt-get update && sudo apt-get install -y -qq spotify-client
-fi
+#echo "Installing Spotify"
+#if ! command -v spotify &> /dev/null
+#then
+#	curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add - #
+#	sudo echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+#	sudo apt-get update && sudo apt-get install -y -qq spotify-client
+#fi
 
-echo "Install Zoom"
-if ! command -v slack &> /dev/null
-then
-	wget https://zoom.us/client/latest/zoom_amd64.deb
-	sudo apt install -y -qq ./zoom_amd64.deb
-	rm zoom_amd64.deb
-fi
+#echo "Install Zoom"
+#if ! command -v slack &> /dev/null
+#then
+#	wget https://zoom.us/client/latest/zoom_amd64.deb
+#	sudo apt install -y -qq ./zoom_amd64.deb
+#	rm zoom_amd64.deb
+#fi
 
-echo "Install Slack"
-if ! command -v slack &> /dev/null
-then
-	if [ "$DISTRO" == "Pop" ]
-	then
-		sudo apt install slack-desktop
-	else
-		wget http://http.us.debian.org/debian/pool/main/libi/libindicator/libindicator3-7_0.5.0-4_amd64.deb
-		wget http://http.us.debian.org/debian/pool/main/liba/libappindicator/libappindicator3-1_0.4.92-8_amd64.deb
-		sudo apt install -y ./libindicator3-7_0.5.0-4_amd64.deb
-		sudo apt install -y ./libappindicator3-1_0.4.92-8_amd64.deb
-		rm libindicator3-7_0.5.0-4_amd64.deb
-		rm libappindicator3-1_0.4.92-8_amd64.deb
+#echo "Install Slack"
+#if ! command -v slack &> /dev/null
+#then
+#	if [ "$DISTRO" == "Pop" ]
+#	then
+#		sudo apt install slack-desktop
+#	else
+#		wget http://http.us.debian.org/debian/pool/main/libi/libindicator/libindicator3-7_0.5.0-4_amd64.deb
+#		wget http://http.us.debian.org/debian/pool/main/liba/libappindicator/libappindicator3-1_0.4.92-8_amd64.deb
+#		sudo apt install -y ./libindicator3-7_0.5.0-4_amd64.deb
+#		sudo apt install -y ./libappindicator3-1_0.4.92-8_amd64.deb
+#		rm libindicator3-7_0.5.0-4_amd64.deb
+#		rm libappindicator3-1_0.4.92-8_amd64.deb
 
-		latest_slack=$(curl -fsSl https://slack.com/intl/en-il/downloads/instructions/ubuntu | grep -Eo "https://downloads.slack-edge.com/releases/linux/.+deb")
-		wget $latest_slack
-		sudo apt install -y -qq ./slack-desktop*.deb
-		rm slack-desktop*
-	fi 
-fi
+#		latest_slack=$(curl -fsSl https://slack.com/intl/en-il/downloads/instructions/ubuntu | grep -Eo "https://downloads.slack-edge.com/releases/linux/.+deb")
+#		wget $latest_slack
+#		sudo apt install -y -qq ./slack-desktop*.deb
+#		rm slack-desktop*
+#	fi 
+#fi
 
 echo "Install Simplenote"
 install-github-release-deb-if-missing /opt/Simplenote/simplenote Automattic simplenote-electron "Simplenote-linux.*amd64.deb"
 
-echo "Install Telegram"
-sudo apt install -y -qq telegram-desktop
+#echo "Install Telegram"
+#sudo apt install -y -qq telegram-desktop
 
-echo "Install transmission"
-sudo apt install -y -qq transmission
+#echo "Install transmission"
+#sudo apt install -y -qq transmission
 
 echo "Install vscode"
 if [ "$DISTRO" == "Pop" ]
@@ -227,8 +228,8 @@ bash -c "$SCRIPT_DIR/jetbrains-toolbox.sh"
 # Handle change sync slowness
 sudo sh -c "echo fs.inotify.max_user_watches=524288 >> /etc/sysctl.conf"
 
-echo "Install Whatsapp for linux"
-install-github-release-deb-if-missing whatsapp-for-linux eneshecan whatsapp-for-linux "whatsapp-for-linux.+amd64.deb"
+#echo "Install Whatsapp for linux"
+#install-github-release-deb-if-missing whatsapp-for-linux eneshecan whatsapp-for-linux "whatsapp-for-linux.+amd64.deb"
 
 if ! command -v docker &> /dev/null
 then
