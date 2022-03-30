@@ -94,15 +94,10 @@ sudo apt install -y -qq \
 		multitail \
 		bat \
 		ranger \
-<<<<<<< HEAD
 		xdg-utils \
-		autojump &>/dev/null
-=======
 		cmake \
 		autojump \
-		chromium \
 		glances
->>>>>>> fa19d7055acecfa4be50b2e1a55924eb100eadd6
 
 if command -v gnome-shell &> /dev/null
 then
